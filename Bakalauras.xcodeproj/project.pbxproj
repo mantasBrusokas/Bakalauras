@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1235403226110B98004E785C /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1235403126110B98004E785C /* Extensions.swift */; };
-		123A1B52261244D400D004A3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 123A1B51261244D400D004A3 /* GoogleService-Info.plist */; };
 		123A1B55261255C900D004A3 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123A1B54261255C900D004A3 /* DatabaseManager.swift */; };
 		128B77A92618BE73000E64EC /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128B77A82618BE73000E64EC /* ChatViewController.swift */; };
 		128B77C52618D2A9000E64EC /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128B77C42618D2A9000E64EC /* StorageManager.swift */; };
@@ -26,6 +25,7 @@
 		12F295D72610FEF700441AA7 /* VideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F295D62610FEF700441AA7 /* VideoPlayerViewController.swift */; };
 		12F295DA2610FF6200441AA7 /* NewConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F295D92610FF6200441AA7 /* NewConversationViewController.swift */; };
 		12F295DD2610FF7A00441AA7 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F295DC2610FF7A00441AA7 /* ProfileViewController.swift */; };
+		12F96B08262EFFC600FECF0F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 12F96B07262EFFC600FECF0F /* GoogleService-Info.plist */; };
 		34D5E0FAFFF2FBEFE91E656E /* Pods_Bakalauras.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03D1050373E0C3BF98C1F81C /* Pods_Bakalauras.framework */; };
 /* End PBXBuildFile section */
 
@@ -33,7 +33,6 @@
 		03D1050373E0C3BF98C1F81C /* Pods_Bakalauras.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bakalauras.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DAE94BEE8AF1D5279A61A95 /* Pods-Bakalauras.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bakalauras.release.xcconfig"; path = "Target Support Files/Pods-Bakalauras/Pods-Bakalauras.release.xcconfig"; sourceTree = "<group>"; };
 		1235403126110B98004E785C /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		123A1B51261244D400D004A3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		123A1B54261255C900D004A3 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		128B77A82618BE73000E64EC /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		128B77C42618D2A9000E64EC /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
@@ -53,6 +52,7 @@
 		12F295D62610FEF700441AA7 /* VideoPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerViewController.swift; sourceTree = "<group>"; };
 		12F295D92610FF6200441AA7 /* NewConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationViewController.swift; sourceTree = "<group>"; };
 		12F295DC2610FF7A00441AA7 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		12F96B07262EFFC600FECF0F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		DE9322FE4AC9B05B1938BCC1 /* Pods-Bakalauras.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bakalauras.debug.xcconfig"; path = "Target Support Files/Pods-Bakalauras/Pods-Bakalauras.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -97,7 +97,7 @@
 		12F295AD2610F4D000441AA7 /* Bakalauras */ = {
 			isa = PBXGroup;
 			children = (
-				123A1B51261244D400D004A3 /* GoogleService-Info.plist */,
+				12F96B07262EFFC600FECF0F /* GoogleService-Info.plist */,
 				12F295C72610FCDA00441AA7 /* Resources */,
 				12F295C62610FCCC00441AA7 /* ViewModels */,
 				12F295C52610FCC200441AA7 /* Models */,
@@ -254,7 +254,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				12F295BB2610F4D600441AA7 /* LaunchScreen.storyboard in Resources */,
-				123A1B52261244D400D004A3 /* GoogleService-Info.plist in Resources */,
+				12F96B08262EFFC600FECF0F /* GoogleService-Info.plist in Resources */,
 				12F295B82610F4D600441AA7 /* Assets.xcassets in Resources */,
 				12F295B62610F4D000441AA7 /* Main.storyboard in Resources */,
 			);

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>986070633749-lo84pplt98dbk7oi0pbg0nlddi4t2kqb.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.986070633749-lo84pplt98dbk7oi0pbg0nlddi4t2kqb</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAK_IhSuIbuI0LMCPklAXy4HLuRtWZ7S0w</string>
+	<key>GCM_SENDER_ID</key>
+	<string>986070633749</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>Mantas.Bakalauras</string>
+	<key>PROJECT_ID</key>
+	<string>findarunningpartner-998ed</string>
+	<key>STORAGE_BUCKET</key>
+	<string>findarunningpartner-998ed.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:986070633749:ios:1908b80afbca7e167ead1c</string>
+</dict>
+</plist>
