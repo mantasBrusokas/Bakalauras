@@ -60,14 +60,13 @@ class ChatViewController: MessagesViewController {
         let forrmattre = DateFormatter()
         forrmattre.dateStyle = .medium
         forrmattre.timeStyle = .long
-        forrmattre.locale = .current
-        
+        forrmattre.locale = Locale(identifier: "en_US_POSIX")
         return forrmattre
         
     }()
     
     public let otherUserEmail: String
-    private let conversationId: String?
+    private var conversationId: String?
     public var isNewconversation = false
    
     
@@ -166,6 +165,10 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
                 if success {
                     print("message send")
                     self?.isNewconversation = false
+                    let newConversationId = "conversation_\(mmessage.messageId)"
+                    self?.conversationId = newConversationId
+                    self?.listenForMessages(id: newConversationId, shouldScrollToBottom: true)
+                    self?.messageInputBar.inputTextView.text = nil
                 } else {
                     print("Failed to send")
                 }
@@ -175,8 +178,9 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
                 return
             }
             // open existing conversation
-            DatabaseManager.shared.sendMessage(to: conversationId, otherUserEmail: otherUserEmail, name: name, newMessage: mmessage, completion: { success in
+            DatabaseManager.shared.sendMessage(to: conversationId, otherUserEmail: otherUserEmail, name: name, newMessage: mmessage, completion: { [weak self] success in
                 if success {
+                    self?.messageInputBar.inputTextView.text = nil
                     print("Message send")
                 } else {
                     print("Failed to send...")
@@ -253,7 +257,7 @@ extension ChatViewController: MessagesDataSource, MessagesLayoutDelegate, Messag
             }
             
         } else {
-            if let otherUserPhotoURL = self.senderPhotoURL {
+            if let otherUserPhotoURL = self.otherUserPhotoURL {
                 avatarView.sd_setImage(with: otherUserPhotoURL, completed: nil)
             } else {
                 // fetch

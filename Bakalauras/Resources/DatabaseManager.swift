@@ -349,6 +349,7 @@ extension DatabaseManager {
                 else {
                     return nil
                 }
+                
                 let sender = Sender(photoURL: "",
                                     senderId: senderEmail,
                                     displayName: name)
