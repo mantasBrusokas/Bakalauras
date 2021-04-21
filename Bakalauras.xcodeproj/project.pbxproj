@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1235403226110B98004E785C /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1235403126110B98004E785C /* Extensions.swift */; };
 		123A1B55261255C900D004A3 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123A1B54261255C900D004A3 /* DatabaseManager.swift */; };
+		12800CB1263047EB00E48743 /* NewConversationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12800CB0263047EB00E48743 /* NewConversationCell.swift */; };
 		128B77A92618BE73000E64EC /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128B77A82618BE73000E64EC /* ChatViewController.swift */; };
 		128B77C52618D2A9000E64EC /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128B77C42618D2A9000E64EC /* StorageManager.swift */; };
 		12E009B92627723D007043DC /* ConversationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E009B82627723D007043DC /* ConversationTableViewCell.swift */; };
@@ -34,6 +35,7 @@
 		0DAE94BEE8AF1D5279A61A95 /* Pods-Bakalauras.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bakalauras.release.xcconfig"; path = "Target Support Files/Pods-Bakalauras/Pods-Bakalauras.release.xcconfig"; sourceTree = "<group>"; };
 		1235403126110B98004E785C /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		123A1B54261255C900D004A3 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		12800CB0263047EB00E48743 /* NewConversationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewConversationCell.swift; sourceTree = "<group>"; };
 		128B77A82618BE73000E64EC /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		128B77C42618D2A9000E64EC /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		12E009B82627723D007043DC /* ConversationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTableViewCell.swift; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 		12F295C42610FCB800441AA7 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				12800CB0263047EB00E48743 /* NewConversationCell.swift */,
 				12F295C82610FD1B00441AA7 /* StoryBoards */,
 				12F295B72610F4D600441AA7 /* Assets.xcassets */,
 				12E009B82627723D007043DC /* ConversationTableViewCell.swift */,
@@ -318,6 +321,7 @@
 				12F295AF2610F4D000441AA7 /* AppDelegate.swift in Sources */,
 				12F295D72610FEF700441AA7 /* VideoPlayerViewController.swift in Sources */,
 				12F295DA2610FF6200441AA7 /* NewConversationViewController.swift in Sources */,
+				12800CB1263047EB00E48743 /* NewConversationCell.swift in Sources */,
 				123A1B55261255C900D004A3 /* DatabaseManager.swift in Sources */,
 				128B77A92618BE73000E64EC /* ChatViewController.swift in Sources */,
 				12F295B12610F4D000441AA7 /* SceneDelegate.swift in Sources */,
