@@ -7,6 +7,8 @@
 
 import UIKit
 import FirebaseAuth
+import SDWebImage
+import FBSDKLoginKit
 
 class ProfileViewController: UIViewController {
     
@@ -57,30 +59,16 @@ class ProfileViewController: UIViewController {
         headerView.addSubview(imageView)
         headerView.addSubview(userNameLabel)
         
-        StorageManager.shared.downloadUrl(for: path, completion: { [weak self] result in
+        StorageManager.shared.downloadUrl(for: path, completion: { result in
             switch result {
             case .success(let url):
-                self?.dowloandImage(imageView: imageView, url: url)
+                imageView.sd_setImage(with: url, completed: nil)
             case .failure(let error):
             print("Failed to get download ulr: \(error)")
             }
             
         })
         return headerView
-    }
-    
-    
-    func dowloandImage(imageView: UIImageView, url: URL) {
-        URLSession.shared.dataTask(with: url, completionHandler: { data, _, error in
-            guard let data = data,error == nil else {
-                return
-            }
-            
-            DispatchQueue.main.async {
-                let image = UIImage(data: data)
-                imageView.image = image
-            }
-        }).resume()
     }
     
 }
@@ -112,6 +100,11 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                                                 guard let strongSelf = self else {
                                                     return
                                                 }
+                                                
+                                                UserDefaults.standard.setValue(nil, forKey: "email")
+                                                UserDefaults.standard.setValue(nil, forKey: "name")
+                                                
+                                                FBSDKLoginKit.LoginManager().logOut()
                                                 
                                                 do {
                                                     try FirebaseAuth.Auth.auth().signOut()

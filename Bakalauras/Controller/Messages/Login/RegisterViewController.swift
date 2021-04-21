@@ -41,7 +41,7 @@ class RegisterViewController: UIViewController {
         field.attributedPlaceholder = NSAttributedString(string:"First Name...", attributes:[NSAttributedString.Key.foregroundColor: UIColor.black])
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
-        field.backgroundColor = .white
+        field.backgroundColor = .secondarySystemBackground
         field.textColor = .black
         return field
     }()
@@ -57,7 +57,7 @@ class RegisterViewController: UIViewController {
         field.attributedPlaceholder = NSAttributedString(string:"Last Name...", attributes:[NSAttributedString.Key.foregroundColor: UIColor.black])
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
-        field.backgroundColor = .white
+        field.backgroundColor = .secondarySystemBackground
         field.textColor = .black
         return field
     }()
@@ -73,7 +73,7 @@ class RegisterViewController: UIViewController {
         field.attributedPlaceholder = NSAttributedString(string:"Email Address...", attributes:[NSAttributedString.Key.foregroundColor: UIColor.black])
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
-        field.backgroundColor = .white
+        field.backgroundColor = .secondarySystemBackground
         field.textColor = .black
         return field
     }()
@@ -88,7 +88,7 @@ class RegisterViewController: UIViewController {
         field.layer.borderColor = UIColor.lightGray.cgColor
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
-        field.backgroundColor = .white
+        field.backgroundColor = .secondarySystemBackground
         field.isSecureTextEntry = true
         field.textColor = .black
         field.attributedPlaceholder = NSAttributedString(string:"Password", attributes:[NSAttributedString.Key.foregroundColor: UIColor.black])
@@ -108,7 +108,7 @@ class RegisterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         title = "Log in"
         
         registerButton.addTarget(self,
@@ -238,6 +238,10 @@ class RegisterViewController: UIViewController {
                                                         strongSelf.alertUserLoginError(message: "This email is taken" )
                                                         return
                                                     }
+                                                    
+                                                    UserDefaults.standard.setValue(email, forKey: "email")
+                                                    UserDefaults.standard.setValue("\(firstName) \(lastName)", forKey: "name")
+                                                    
                                                     let chatUser = ChatAppUser(firstName: firstName, lastName: lastName, emailAddress: email)
                                                     DatabaseManager.shared.insertUser(with: chatUser, completion: { success in
                                                         if success {

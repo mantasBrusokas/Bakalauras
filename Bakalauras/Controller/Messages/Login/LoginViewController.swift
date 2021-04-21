@@ -39,7 +39,7 @@ class LoginViewController: UIViewController {
         field.attributedPlaceholder = NSAttributedString(string:"Email Address...", attributes:[NSAttributedString.Key.foregroundColor: UIColor.black])
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
-        field.backgroundColor = .white
+        field.backgroundColor = .secondarySystemBackground
         field.textColor = .black
         return field
     }()
@@ -55,7 +55,7 @@ class LoginViewController: UIViewController {
         field.attributedPlaceholder = NSAttributedString(string:"Password...", attributes:[NSAttributedString.Key.foregroundColor: UIColor.black])
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
-        field.backgroundColor = .white
+        field.backgroundColor = .secondarySystemBackground
         field.isSecureTextEntry = true
         field.textColor = .black
         return field
@@ -87,7 +87,7 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         title = "Log in"
         emailField.isHidden = true
         passwordField.isHidden = true
@@ -143,6 +143,9 @@ class LoginViewController: UIViewController {
     }
     
     @objc private func loginButtonTapped() {
+        UserDefaults.standard.setValue(nil, forKey: "email")
+        UserDefaults.standard.setValue(nil, forKey: "name")
+        
         if emailField.isHidden == false && passwordField.isHidden == false {
             
             
@@ -250,6 +253,9 @@ extension LoginViewController: LoginButtonDelegate {
     }
     
     func loginButton(_ loginButton: FBLoginButton, didCompleteWith result: LoginManagerLoginResult?, error: Error?) {
+        UserDefaults.standard.setValue(nil, forKey: "email")
+        UserDefaults.standard.setValue(nil, forKey: "name")
+        
         guard let token = result?.token?.tokenString else {
             print("User failed to login with Facebook")
             return
