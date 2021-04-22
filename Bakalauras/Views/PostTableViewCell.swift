@@ -14,9 +14,9 @@ class PostTableViewCell: UITableViewCell {
     
     private let userImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-        imageView.layer.cornerRadius = 50
         imageView.layer.masksToBounds = true
+        imageView.layer.cornerRadius = 25
+        imageView.clipsToBounds = true
         return imageView
     }()
     
@@ -26,8 +26,8 @@ class PostTableViewCell: UITableViewCell {
         return label
     }()
     
-    private let postMessage: UITextView = {
-        let text = UITextView()
+    private let postMessage: UILabel = {
+        let text = UILabel()
         text.font = .systemFont(ofSize: 19, weight: .regular)
         return text
     }()
@@ -46,11 +46,11 @@ class PostTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         userImageView.frame = CGRect(x: 10, y: 10,
-                                     width: 10, height: 10)
+                                     width: 50, height: 50)
         userNameLabel.frame = CGRect(x: userImageView.right + 10, y: 10,
-                                     width: contentView.width - 20 - userImageView.width, height: (contentView.height-20)/2)
-        postMessage.frame = CGRect(x: 10, y: userImageView.bottom + 10,
-                                        width: contentView.width - 20 - userImageView.width, height: (contentView.height-20)/2)
+                                     width: contentView.width - 100, height: 50)
+        postMessage.frame = CGRect(x: 10, y: userImageView.bottom + 15,
+                                        width: contentView.width - 20, height: 160)
     }
     
     public func configure(with model: Post) {
@@ -58,6 +58,7 @@ class PostTableViewCell: UITableViewCell {
         self.userNameLabel.text = model.authorName
         
         let path = "images/\(model.email)_profile_picture.png"
+        print("\(model.email)")
         StorageManager.shared.downloadUrl(for: path, completion: { [weak self] result in
             switch result {
             case .success(let url):

@@ -540,6 +540,83 @@ extension DatabaseManager {
         
         
     }
+    
+
+}
+
+extension DatabaseManager {
+    
+    public func createNewPost(post: Post, completion: @escaping (Bool) -> Void) {
+        
+        self.database.child("posts").observeSingleEvent(of: .value, with: { snapshot in
+            if var postsCollection = snapshot.value as? [[String: Any]] {
+                // append posts dictionary
+                let newElement: [String: Any] = [
+                    "id": post.id,
+                    "name": post.authorName,
+                    "email": post.email,
+                    "date": post.date,
+                    "text": post.text,
+                    "isRead": post.read,
+                ]
+                
+                postsCollection.insert(newElement, at: 0)
+                self.database.child("posts").setValue(postsCollection, withCompletionBlock: { error, _ in
+                    guard error == nil else {
+                        completion(false)
+                        return
+                    }
+                    completion(true)
+                })
+
+            } else {
+                // create posts dictionery
+                let newCollection: [[String: Any]] = [
+                    [
+                        "id": post.id,
+                        "name": post.authorName,
+                        "email": post.email,
+                        "date": post.date,
+                        "text": post.text,
+                        "isRead": post.read,
+                    ]
+                ]
+                self.database.child("posts").setValue(newCollection, withCompletionBlock: { error, _ in
+                    guard error == nil else {
+                        completion(false)
+                        return
+                    }
+                    
+                    completion(true)
+                })
+            }
+        })
+    }
+    
+    /// Fetches and returns all convertanions for the user with passed email
+    public func getAllPosts(completion: @escaping (Result<[Post], Error>) -> Void ) {
+        database.child("posts").observe(.value, with: {snapshot in
+            guard let value = snapshot.value as? [[String: Any]] else {
+                completion(.failure(DatabaseError.failedToFetch))
+                return
+            }
+            let posts: [Post] = value.compactMap({ dictionary in
+                guard let postId = dictionary["id"] as? String,
+                      let name = dictionary["name"] as? String,
+                      let email = dictionary["email"] as? String,
+                      let text = dictionary["text"] as? String,
+                      let date = dictionary["date"] as? String,
+                      let isRead = dictionary["isRead"] as? Bool else {
+                    return nil
+                }
+                
+                
+                return Post(id: postId, authorName: name, email: email, date: date, text: text, read: isRead)
+            })
+            completion(.success(posts))
+            
+        })
+    }
 }
 
     struct ChatAppUser {

@@ -95,7 +95,7 @@
         <!--Home-->
         <scene sceneID="48Y-rY-0bH">
             <objects>
-                <viewController id="77k-Hm-uDU" customClass="ViewController" customModule="Bakalauras" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="77k-Hm-uDU" customClass="PostsViewController" customModule="Bakalauras" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="xcf-jf-AUA">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
