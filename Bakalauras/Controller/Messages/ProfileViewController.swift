@@ -34,6 +34,21 @@ class ProfileViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    override func viewDidAppear(_ animeted: Bool) {
+        super.viewDidAppear(animeted)
+            
+            validateAuth()
+        
+        }
+    private func validateAuth() {
+        if FirebaseAuth.Auth.auth().currentUser == nil {
+                let vc = LoginViewController()
+                let nav = UINavigationController(rootViewController: vc)
+                nav.modalPresentationStyle = .fullScreen
+                present(nav, animated: false)
+    }
+    }
+    
     func createTableHeader() -> UIView? {
         guard  let email = UserDefaults.standard.value(forKey: "email") as? String else {
             return nil

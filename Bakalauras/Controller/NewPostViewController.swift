@@ -1,19 +1,19 @@
-
 //
-//  ViewController.swift
+//  NewPostViewController.swift
 //  Bakalauras
 //
-//  Created by Mantas Brusokas on 2021-03-28.
+//  Created by Mantas Brusokas on 2021-04-22.
 //
 
 import UIKit
+import FirebaseAuth
 
-class ViewController: UIViewController {
+class NewPostViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
-
+    
    
 }

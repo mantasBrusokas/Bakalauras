@@ -10,6 +10,8 @@
 		1235403226110B98004E785C /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1235403126110B98004E785C /* Extensions.swift */; };
 		123A1B55261255C900D004A3 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123A1B54261255C900D004A3 /* DatabaseManager.swift */; };
 		12800CB1263047EB00E48743 /* NewConversationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12800CB0263047EB00E48743 /* NewConversationCell.swift */; };
+		12800CBE26314FF400E48743 /* NewPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12800CBD26314FF400E48743 /* NewPostViewController.swift */; };
+		12800CC1263153AA00E48743 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12800CC0263153AA00E48743 /* PostTableViewCell.swift */; };
 		128B77A92618BE73000E64EC /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128B77A82618BE73000E64EC /* ChatViewController.swift */; };
 		128B77C52618D2A9000E64EC /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128B77C42618D2A9000E64EC /* StorageManager.swift */; };
 		12E009B92627723D007043DC /* ConversationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E009B82627723D007043DC /* ConversationTableViewCell.swift */; };
@@ -21,9 +23,7 @@
 		12F295BB2610F4D600441AA7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 12F295B92610F4D600441AA7 /* LaunchScreen.storyboard */; };
 		12F295CA2610FE4C00441AA7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F295C92610FE4C00441AA7 /* LoginViewController.swift */; };
 		12F295CE2610FE7000441AA7 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F295CD2610FE7000441AA7 /* RegisterViewController.swift */; };
-		12F295D12610FEA300441AA7 /* PhotoViewerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F295D02610FEA300441AA7 /* PhotoViewerViewController.swift */; };
-		12F295D42610FEE000441AA7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F295D32610FEE000441AA7 /* ViewController.swift */; };
-		12F295D72610FEF700441AA7 /* VideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F295D62610FEF700441AA7 /* VideoPlayerViewController.swift */; };
+		12F295D42610FEE000441AA7 /* PostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F295D32610FEE000441AA7 /* PostsViewController.swift */; };
 		12F295DA2610FF6200441AA7 /* NewConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F295D92610FF6200441AA7 /* NewConversationViewController.swift */; };
 		12F295DD2610FF7A00441AA7 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F295DC2610FF7A00441AA7 /* ProfileViewController.swift */; };
 		12F96B08262EFFC600FECF0F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 12F96B07262EFFC600FECF0F /* GoogleService-Info.plist */; };
@@ -36,6 +36,8 @@
 		1235403126110B98004E785C /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		123A1B54261255C900D004A3 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		12800CB0263047EB00E48743 /* NewConversationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewConversationCell.swift; sourceTree = "<group>"; };
+		12800CBD26314FF400E48743 /* NewPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostViewController.swift; sourceTree = "<group>"; };
+		12800CC0263153AA00E48743 /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		128B77A82618BE73000E64EC /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		128B77C42618D2A9000E64EC /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		12E009B82627723D007043DC /* ConversationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTableViewCell.swift; sourceTree = "<group>"; };
@@ -49,9 +51,7 @@
 		12F295BC2610F4D600441AA7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		12F295C92610FE4C00441AA7 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		12F295CD2610FE7000441AA7 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
-		12F295D02610FEA300441AA7 /* PhotoViewerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewerViewController.swift; sourceTree = "<group>"; };
-		12F295D32610FEE000441AA7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		12F295D62610FEF700441AA7 /* VideoPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerViewController.swift; sourceTree = "<group>"; };
+		12F295D32610FEE000441AA7 /* PostsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsViewController.swift; sourceTree = "<group>"; };
 		12F295D92610FF6200441AA7 /* NewConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationViewController.swift; sourceTree = "<group>"; };
 		12F295DC2610FF7A00441AA7 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		12F96B07262EFFC600FECF0F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -113,7 +113,8 @@
 		12F295C32610FCB000441AA7 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				12F295D32610FEE000441AA7 /* ViewController.swift */,
+				12F295D32610FEE000441AA7 /* PostsViewController.swift */,
+				12800CBD26314FF400E48743 /* NewPostViewController.swift */,
 				12F295DF2610FF8100441AA7 /* Messages */,
 			);
 			path = Controller;
@@ -126,6 +127,7 @@
 				12F295C82610FD1B00441AA7 /* StoryBoards */,
 				12F295B72610F4D600441AA7 /* Assets.xcassets */,
 				12E009B82627723D007043DC /* ConversationTableViewCell.swift */,
+				12800CC0263153AA00E48743 /* PostTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -170,8 +172,6 @@
 			children = (
 				12F295B22610F4D000441AA7 /* ConversationsViewController.swift */,
 				12F295E12611007F00441AA7 /* Login */,
-				12F295D02610FEA300441AA7 /* PhotoViewerViewController.swift */,
-				12F295D62610FEF700441AA7 /* VideoPlayerViewController.swift */,
 				12F295D92610FF6200441AA7 /* NewConversationViewController.swift */,
 				12F295DC2610FF7A00441AA7 /* ProfileViewController.swift */,
 				128B77A82618BE73000E64EC /* ChatViewController.swift */,
@@ -316,18 +316,18 @@
 				12F295CE2610FE7000441AA7 /* RegisterViewController.swift in Sources */,
 				12F295DD2610FF7A00441AA7 /* ProfileViewController.swift in Sources */,
 				128B77C52618D2A9000E64EC /* StorageManager.swift in Sources */,
-				12F295D42610FEE000441AA7 /* ViewController.swift in Sources */,
+				12F295D42610FEE000441AA7 /* PostsViewController.swift in Sources */,
 				12F295B32610F4D000441AA7 /* ConversationsViewController.swift in Sources */,
 				12F295AF2610F4D000441AA7 /* AppDelegate.swift in Sources */,
-				12F295D72610FEF700441AA7 /* VideoPlayerViewController.swift in Sources */,
 				12F295DA2610FF6200441AA7 /* NewConversationViewController.swift in Sources */,
 				12800CB1263047EB00E48743 /* NewConversationCell.swift in Sources */,
 				123A1B55261255C900D004A3 /* DatabaseManager.swift in Sources */,
 				128B77A92618BE73000E64EC /* ChatViewController.swift in Sources */,
+				12800CC1263153AA00E48743 /* PostTableViewCell.swift in Sources */,
 				12F295B12610F4D000441AA7 /* SceneDelegate.swift in Sources */,
 				1235403226110B98004E785C /* Extensions.swift in Sources */,
-				12F295D12610FEA300441AA7 /* PhotoViewerViewController.swift in Sources */,
 				12E009B92627723D007043DC /* ConversationTableViewCell.swift in Sources */,
+				12800CBE26314FF400E48743 /* NewPostViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
