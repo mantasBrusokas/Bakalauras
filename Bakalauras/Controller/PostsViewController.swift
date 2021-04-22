@@ -17,6 +17,7 @@ struct Post {
     let date: String
     let text: String
     let read: Bool
+    let runningDate: String
     
 }
 
@@ -74,7 +75,7 @@ class PostsViewController: UIViewController {
             NotificationCenter.default.removeObserver(observer)
         }
         
-        print("starting conversations fetch.....")
+        print("starting posts fetch.....")
         
         let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
         DatabaseManager.shared.getAllPosts(completion: { [weak self] result in
@@ -94,7 +95,7 @@ class PostsViewController: UIViewController {
                     self?.tableView.reloadData()
                 }
             case .failure(let error):
-            print("failed to get conversations: \(error)")
+            print("failed to get posts: \(error)")
                 self?.tableView.isHidden = true
                 self?.noPostLabel.isHidden = false
             
@@ -112,8 +113,7 @@ class PostsViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         tableView.frame = view.bounds
-        noPostLabel.frame = CGRect(x: 10,
-                                            y: (view.height-100)/2, width: view.width-20, height: 100)
+        noPostLabel.frame = CGRect(x: 10, y: (view.height-100)/2, width: view.width-20, height: 100)
     }
     
     override func viewDidAppear(_ animeted: Bool) {
@@ -150,6 +150,7 @@ extension PostsViewController: UITableViewDelegate, UITableViewDataSource {
         
         return cell
     }
+    
     
     
 /*    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -27,18 +27,16 @@ class NewPostViewController: UIViewController {
         return button
     } ()
     
-    private let textField: UITextField = {
-        let field = UITextField()
+    private let textField: UITextView = {
+        let field = UITextView()
         field.autocapitalizationType = .none
         field.autocorrectionType = .no
         field.returnKeyType = .continue
         field.layer.cornerRadius = 12
         field.layer.borderWidth = 1
         field.layer.borderColor = UIColor.lightGray.cgColor
-        field.attributedPlaceholder = NSAttributedString(string:"Write something...", attributes:[NSAttributedString.Key.foregroundColor: UIColor.black])
-        field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
-        field.leftViewMode = .always
         field.backgroundColor = .secondarySystemBackground
+        field.font = UIFont.systemFont(ofSize: 17)
         field.textColor = .black
         return field
     }()
@@ -67,6 +65,13 @@ class NewPostViewController: UIViewController {
         scrollView.addSubview(textField)
         scrollView.addSubview(date)
         scrollView.addSubview(postButton)
+        if let navigationBar = self.navigationController?.navigationBar {
+            let firstFrame = CGRect(x: 10, y: 0, width: 100, height: navigationBar.frame.height)
+            let firstLabel = UILabel(frame: firstFrame)
+            firstLabel.text = "New Post:"
+            firstLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+            navigationBar.addSubview(firstLabel)
+        }
         
         scrollView.isUserInteractionEnabled = true
         
@@ -85,10 +90,10 @@ class NewPostViewController: UIViewController {
         textField.frame = CGRect(x: 5,
                                       y: 5,
                                       width: scrollView.width-10,
-                                      height: 100)
-        date.frame = CGRect(x: 100,
+                                      height: 80)
+        date.frame = CGRect(x: (scrollView.width - date.width) / 2,
                             y: textField.bottom + 10,
-                                     width: scrollView.width-60,
+                            width: date.width,
                                      height: 52)
      
         postButton.frame = CGRect(x: 30,
@@ -97,14 +102,82 @@ class NewPostViewController: UIViewController {
                                       height: 52)
     }
     
+    func alertPostError(message: String = "Please enter all information to create a new post :) ") {
+        let alert = UIAlertController(title: "Oops",
+                                      message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+        present(alert, animated: true)
+    }
+    
+    private func createPostId() -> String? {
+        
+        guard let currentUserEmail = UserDefaults.standard.value(forKey: "email") as? String
+        else {
+            return nil
+        }
+        let safeCurrentEmail = DatabaseManager.safeEmail(emailAddress: currentUserEmail)
+        let dateString = Date()
+        let newIdetifier = "\(safeCurrentEmail)_\(dateString)"
+        return newIdetifier
+    }
+    
+    private func getCurrentDate() -> String {
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .long
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.dateFormat = "MMM d, h:mm a"
+        let dateString = formatter.string(from: date)
+        return dateString
+    }
+    
+    private func formatDatePickerToString(date: UIDatePicker) -> String {
+        let datePickerDate = date
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .long
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.dateFormat = "MMM d, h:mm a"
+        let dateString = formatter.string(from: datePickerDate.date)
+        return dateString
+    }
+    
+    
     @objc private func postButtonTapped() {
         
         textField.resignFirstResponder()
         date.resignFirstResponder()
         
-        DatabaseManager.shared.createNewPost(post: Post(id: "testinis", authorName: "test", email: "alio", date: "sda", text: "Naujausias postas!!", read: false), completion: {_ in })
+        guard let currentUserEmail = UserDefaults.standard.value(forKey: "email") as? String,
+              let currentUserName = UserDefaults.standard.value(forKey: "name") as? String
+        else {
+            return
+        }
+        let safeCurrentEmail = DatabaseManager.safeEmail(emailAddress: currentUserEmail)
         
-        dismissSelf()
+        guard let text = textField.text,
+              !text.isEmpty else {
+            alertPostError(message: "Description is empty")
+            return
+        }
+        guard let postId = createPostId() else {
+            return
+        }
+        
+        
+        DatabaseManager.shared.createNewPost(post: Post(id: postId, authorName: currentUserName, email: safeCurrentEmail, date: getCurrentDate(), text: text, read: false, runningDate: formatDatePickerToString(date: date)), completion: { [weak self] success in
+            if success {
+                self?.dismissSelf()
+                print("Post created")
+            } else {
+                print("Failed to create post...")
+            }
+        })
+
+
+        
+        
     }
     
    

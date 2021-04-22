@@ -203,6 +203,7 @@ class LoginViewController: UIViewController {
                 
                 print("Logged in user: \(user)")
                 strongSelf.navigationController?.dismiss(animated: true, completion: nil)
+                
             })
             // Firebase Log in
         }

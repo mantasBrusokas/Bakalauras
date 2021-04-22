@@ -548,6 +548,7 @@ extension DatabaseManager {
     
     public func createNewPost(post: Post, completion: @escaping (Bool) -> Void) {
         
+        
         self.database.child("posts").observeSingleEvent(of: .value, with: { snapshot in
             if var postsCollection = snapshot.value as? [[String: Any]] {
                 // append posts dictionary
@@ -558,6 +559,7 @@ extension DatabaseManager {
                     "date": post.date,
                     "text": post.text,
                     "isRead": post.read,
+                    "runningDate": post.runningDate,
                 ]
                 
                 postsCollection.insert(newElement, at: 0)
@@ -578,7 +580,8 @@ extension DatabaseManager {
                         "email": post.email,
                         "date": post.date,
                         "text": post.text,
-                        "isRead": post.read,
+                        "isRead": post.read,   
+                        "runningDate": post.runningDate,
                     ]
                 ]
                 self.database.child("posts").setValue(newCollection, withCompletionBlock: { error, _ in
@@ -606,12 +609,13 @@ extension DatabaseManager {
                       let email = dictionary["email"] as? String,
                       let text = dictionary["text"] as? String,
                       let date = dictionary["date"] as? String,
-                      let isRead = dictionary["isRead"] as? Bool else {
+                      let isRead = dictionary["isRead"] as? Bool,
+                      let runningDate = dictionary["runningDate"] as? String  else {
                     return nil
                 }
                 
                 
-                return Post(id: postId, authorName: name, email: email, date: date, text: text, read: isRead)
+                return Post(id: postId, authorName: name, email: email, date: date, text: text, read: isRead, runningDate: runningDate)
             })
             completion(.success(posts))
             
