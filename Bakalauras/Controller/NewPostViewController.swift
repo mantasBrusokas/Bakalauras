@@ -27,6 +27,17 @@ class NewPostViewController: UIViewController {
         return button
     } ()
     
+    private let addRouteButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("AddStartingPoint", for: .normal)
+        button.backgroundColor = .systemGreen
+        button.setTitleColor(.white, for: .normal)
+        //button.layer.cornerRadius = 12
+        button.layer.masksToBounds = true
+        button.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
+        return button
+    } ()
+    
     private let textField: UITextView = {
         let field = UITextView()
         field.autocapitalizationType = .none
@@ -65,10 +76,12 @@ class NewPostViewController: UIViewController {
         scrollView.addSubview(textField)
         scrollView.addSubview(date)
         scrollView.addSubview(postButton)
+        scrollView.addSubview(addRouteButton)
         if let navigationBar = self.navigationController?.navigationBar {
-            let firstFrame = CGRect(x: 10, y: 0, width: 100, height: navigationBar.frame.height)
-            let firstLabel = UILabel(frame: firstFrame)
-            firstLabel.text = "New Post:"
+            let firstLabel = UILabel()
+            let firstFrame = CGRect(x: (navigationBar.width - firstLabel.width) / 2, y: 0, width: 100, height: navigationBar.frame.height)
+            firstLabel.frame = firstFrame
+            firstLabel.text = "New Post"
             firstLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
             navigationBar.addSubview(firstLabel)
         }
@@ -95,9 +108,13 @@ class NewPostViewController: UIViewController {
                             y: textField.bottom + 10,
                             width: date.width,
                                      height: 52)
+        addRouteButton.frame = CGRect(x: 30,
+                                      y: date.bottom + 10,
+                                      width: scrollView.width-60,
+                                      height: 52)
      
         postButton.frame = CGRect(x: 30,
-                                      y: date.bottom + 10,
+                                      y: addRouteButton.bottom + 10,
                                       width: scrollView.width-60,
                                       height: 52)
     }

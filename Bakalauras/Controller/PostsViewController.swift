@@ -145,21 +145,18 @@ extension PostsViewController: UITableViewDelegate, UITableViewDataSource {
         
         return cell
     }
-    
-    
-    
-/*    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let model = posts[indexPath.row]
-        //openConversation(model)
+        openPost(model)
     }
     
-    func openConversation(_ model: Conversation) {
-        let vc = ChatViewController(with: model.otherUserEmail, id: model.id)
-        vc.title =  model.name
+    func openPost(_ model: Post) {
+        let vc = DetailedPostInfoViewController()
         vc.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(vc, animated: true)
-    }*/
+    }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 300
