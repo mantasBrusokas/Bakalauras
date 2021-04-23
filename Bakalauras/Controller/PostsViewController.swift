@@ -55,29 +55,17 @@ class PostsViewController: UIViewController {
         view.addSubview(tableView)
         view.addSubview(noPostLabel)
         setupTableView()
-        startListeningForPosts()
-        
-        loginObserver = NotificationCenter.default.addObserver(forName: .didLogInNotification, object: nil, queue: .main, using: { [weak self] _ in
-            guard let strongSelf = self else {
-                return
-            }
-            
-            strongSelf.startListeningForPosts()
-        })
+
     }
     
     private func startListeningForPosts() {
-        guard let email = UserDefaults.standard.value(forKey: "email") as? String else {
-            return
-        }
         
         if let observer = loginObserver {
             NotificationCenter.default.removeObserver(observer)
         }
         
         print("starting posts fetch.....")
-        
-        let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
+
         DatabaseManager.shared.getAllPosts(completion: { [weak self] result in
             switch result {
             case .success(let posts):
@@ -118,10 +106,17 @@ class PostsViewController: UIViewController {
     
     override func viewDidAppear(_ animeted: Bool) {
         super.viewDidAppear(animeted)
+        validateAuth()
+        startListeningForPosts()
+        print("Postaiiii")
+        loginObserver = NotificationCenter.default.addObserver(forName: .didLogInNotification, object: nil, queue: .main, using: { [weak self] _ in
+            guard let strongSelf = self else {
+                return
+            }
             
-            validateAuth()
-        
-        }
+            strongSelf.startListeningForPosts()
+        })
+    }
     private func validateAuth() {
         if FirebaseAuth.Auth.auth().currentUser == nil {
                 let vc = LoginViewController()

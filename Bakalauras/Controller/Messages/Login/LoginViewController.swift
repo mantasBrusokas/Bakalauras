@@ -335,7 +335,7 @@ extension LoginViewController: LoginButtonDelegate {
                     }
                     return
                 }
-                print("Successfully logged user in")
+                print("Successfully logged user in: \(email)")
                 strongSelf.navigationController?.dismiss(animated: true, completion: nil)
                 
             })

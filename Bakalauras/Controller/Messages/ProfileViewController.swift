@@ -18,7 +18,6 @@ class ProfileViewController: UIViewController {
     
     private let userNameLabel: UILabel = {
         let label = UILabel()
-        label.text = UserDefaults.standard.value(forKey: "name") as? String
         label.textAlignment = .center
         label.textColor = .black
         label.font = .systemFont(ofSize: 24, weight: .heavy)
@@ -30,19 +29,19 @@ class ProfileViewController: UIViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.tableHeaderView = createTableHeader()
+        
         // Do any additional setup after loading the view.
     }
     
     override func viewDidAppear(_ animeted: Bool) {
         super.viewDidAppear(animeted)
-            
-            validateAuth()
-        
-        }
+        validateAuth()
+        tableView.tableHeaderView = createTableHeader()
+        print("Profilasssss")
+    }
     private func validateAuth() {
         if FirebaseAuth.Auth.auth().currentUser == nil {
-                let vc = LoginViewController()
+            let vc = LoginViewController()
                 let nav = UINavigationController(rootViewController: vc)
                 nav.modalPresentationStyle = .fullScreen
                 present(nav, animated: false)
@@ -70,6 +69,8 @@ class ProfileViewController: UIViewController {
         imageView.layer.borderWidth = 3
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = imageView.width/2
+        
+        userNameLabel.text = UserDefaults.standard.value(forKey: "name") as? String
         userNameLabel.layer.frame = CGRect(x: (headerView.width - 300) / 2, y: 180, width: 300, height: 30)
         headerView.addSubview(imageView)
         headerView.addSubview(userNameLabel)
@@ -77,7 +78,10 @@ class ProfileViewController: UIViewController {
         StorageManager.shared.downloadUrl(for: path, completion: { result in
             switch result {
             case .success(let url):
-                imageView.sd_setImage(with: url, completed: nil)
+                //imageView.sd_setImage(with: url, completed: nil)
+                DispatchQueue.main.async {
+                    imageView.sd_setImage(with: url, completed: nil)
+                }
             case .failure(let error):
             print("Failed to get download ulr: \(error)")
             }
@@ -128,6 +132,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                                                     let nav = UINavigationController(rootViewController: vc)
                                                     nav.modalPresentationStyle = .fullScreen
                                                     strongSelf.present(nav, animated: true)
+                                                    print("User log out: \(UserDefaults.standard.value(forKey: "name") as? String ?? "Default")")
                                                 }
                                                 catch {
                                                     print("Failed to log out")

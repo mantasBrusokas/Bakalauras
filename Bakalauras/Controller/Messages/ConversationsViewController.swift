@@ -55,15 +55,7 @@ class ConversationsViewController: UIViewController {
         view.addSubview(tableView)
         view.addSubview(noConversationsLabel)
         setupTableView()
-        startListeningForConversations()
-        
-        loginObserver = NotificationCenter.default.addObserver(forName: .didLogInNotification, object: nil, queue: .main, using: { [weak self] _ in
-            guard let strongSelf = self else {
-                return
-            }
-            
-            strongSelf.startListeningForConversations()
-        })
+
     }
     
     private func startListeningForConversations() {
@@ -151,15 +143,23 @@ class ConversationsViewController: UIViewController {
     
     override func viewDidAppear(_ animeted: Bool) {
         super.viewDidAppear(animeted)
-            
-            validateAuth()
+        validateAuth()
+        startListeningForConversations()
+        print("Conversationaiiiiii")
         
-        }
+        loginObserver = NotificationCenter.default.addObserver(forName: .didLogInNotification, object: nil, queue: .main, using: { [weak self] _ in
+            guard let strongSelf = self else {
+                return
+            }
+            
+            strongSelf.startListeningForConversations()
+        })
+    }
     
     private func validateAuth() {
         if FirebaseAuth.Auth.auth().currentUser == nil {
-                let vc = LoginViewController()
-                let nav = UINavigationController(rootViewController: vc)
+            let vc = LoginViewController()
+            let nav = UINavigationController(rootViewController: vc)
                 nav.modalPresentationStyle = .fullScreen
                 present(nav, animated: false)
     }
