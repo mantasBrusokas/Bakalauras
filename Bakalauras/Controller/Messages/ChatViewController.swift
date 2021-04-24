@@ -140,6 +140,7 @@ class ChatViewController: MessagesViewController {
 
 extension ChatViewController: InputBarAccessoryViewDelegate {
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
+        self.messageInputBar.inputTextView.text = nil
         guard !text.replacingOccurrences(of: " ", with: "").isEmpty,
               let selfSender = self.selfSender,
               let messageId = createMessageId()
