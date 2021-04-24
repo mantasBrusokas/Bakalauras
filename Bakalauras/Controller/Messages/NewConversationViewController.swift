@@ -113,6 +113,7 @@ extension NewConversationViewController: UISearchBarDelegate {
         self.searchUsers(query: text)
         
     }
+    
     func searchUsers(query: String){
         // chech if array has firebase results
         if hasFetched {
@@ -134,6 +135,7 @@ extension NewConversationViewController: UISearchBarDelegate {
             })
         }
     }
+    
     func filterUsers(with term: String) {
         guard let currentUserEmail = UserDefaults.standard.value(forKey: "email") as? String, hasFetched else {
             return

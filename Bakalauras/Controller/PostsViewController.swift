@@ -27,6 +27,7 @@ class PostsViewController: UIViewController {
     private let spinner = JGProgressHUD(style: .dark)
     
     private var posts = [Post]()
+    
 
     private let tableView: UITableView = {
         let table = UITableView()
@@ -153,7 +154,7 @@ extension PostsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func openPost(_ model: Post) {
-        let vc = DetailedPostInfoViewController()
+        let vc = DetailedPostInfoViewController(with: model)
         vc.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(vc, animated: true)
     }

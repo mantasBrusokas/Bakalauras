@@ -329,6 +329,37 @@ extension DatabaseManager {
         })
     }
     
+    /// Fetches and returns all convertanions for the user with passed email
+    public func checkConvesation(for email: String, checkUserEmail: String, completion: @escaping (Result<[Conversation], Error>) -> Void ) {
+        database.child("\(email)/conversations").observe(.value, with: {snapshot in
+            guard let value = snapshot.value as? [[String: Any]] else {
+                completion(.failure(DatabaseError.failedToFetch))
+                return
+            }
+            let conversations: [Conversation] = value.compactMap({ dictionary in
+                guard let conversationId = dictionary["id"] as? String,
+                      let name = dictionary["name"] as? String,
+                      let otherUserEmail = dictionary["other_user_email"] as? String,
+                      otherUserEmail == checkUserEmail,
+                      let latestMessage = dictionary["latest_message"] as? [String: Any],
+                      let date = latestMessage["date"] as? String,
+                      let message = latestMessage["message"] as? String,
+                      let isRead = latestMessage["is_read"] as? Bool else {
+                    print("Nulas")
+                    return nil
+                }
+                print(otherUserEmail)
+                print(checkUserEmail)
+                let latestMessageObject = LatestMessage(date: date,
+                                                        text: message,
+                                                        read: isRead)
+                return Conversation(id: conversationId, name: name, otherUserEmail: otherUserEmail, latestMessage: latestMessageObject)
+            })
+            completion(.success(conversations))
+            
+        })
+    }
+    
     /// Get all messages for given convo
     public func getAllMessagesForConversation(with id: String, completion: @escaping (Result<[Message], Error>) -> Void) {
         database.child("\(id)/messages").observe(.value, with: { snapshot in
@@ -596,7 +627,7 @@ extension DatabaseManager {
         })
     }
     
-    /// Fetches and returns all convertanions for the user with passed email
+    /// Fetches and returns all posts
     public func getAllPosts(completion: @escaping (Result<[Post], Error>) -> Void ) {
         database.child("posts").observe(.value, with: {snapshot in
             guard let value = snapshot.value as? [[String: Any]] else {
