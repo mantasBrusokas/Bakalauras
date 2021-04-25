@@ -7,6 +7,8 @@
 
 import Foundation
 import FirebaseDatabase
+import CoreLocation
+import MessageKit
 
 final class DatabaseManager{
     
@@ -578,7 +580,7 @@ extension DatabaseManager {
 extension DatabaseManager {
     
     public func createNewPost(post: Post, completion: @escaping (Bool) -> Void) {
-        
+        let locationMap = "\(post.location.location.coordinate.longitude),\(post.location.location.coordinate.latitude)"
         
         self.database.child("posts").observeSingleEvent(of: .value, with: { snapshot in
             if var postsCollection = snapshot.value as? [[String: Any]] {
@@ -591,6 +593,7 @@ extension DatabaseManager {
                     "text": post.text,
                     "isRead": post.read,
                     "runningDate": post.runningDate,
+                    "location": locationMap,
                 ]
                 
                 postsCollection.insert(newElement, at: 0)
@@ -613,9 +616,10 @@ extension DatabaseManager {
                         "text": post.text,
                         "isRead": post.read,   
                         "runningDate": post.runningDate,
+                        "location": locationMap,
                     ]
                 ]
-                self.database.child("posts").setValue(newCollection, withCompletionBlock: { error, _ in
+                self.database.child("posts/\(post.id)").setValue(newCollection, withCompletionBlock: { error, _ in
                     guard error == nil else {
                         completion(false)
                         return
@@ -641,12 +645,18 @@ extension DatabaseManager {
                       let text = dictionary["text"] as? String,
                       let date = dictionary["date"] as? String,
                       let isRead = dictionary["isRead"] as? Bool,
-                      let runningDate = dictionary["runningDate"] as? String  else {
+                      let runningDate = dictionary["runningDate"] as? String,
+                      let locationFromDB = dictionary["location"] as? String else {
                     return nil
                 }
-                
-                
-                return Post(id: postId, authorName: name, email: email, date: date, text: text, read: isRead, runningDate: runningDate)
+                let locationComponents = locationFromDB.components(separatedBy: ",")
+                guard let longitude = Double(locationComponents[0]),
+                    let latitude = Double(locationComponents[1]) else {
+                    return nil
+                }
+                let location = Location(location: CLLocation(latitude: latitude, longitude: longitude),
+                                        size: .zero)
+                return Post(id: postId, authorName: name, email: email, date: date, text: text, read: isRead, runningDate: runningDate, location: location)
             })
             completion(.success(posts))
             

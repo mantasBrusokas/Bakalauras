@@ -7,10 +7,20 @@
 
 import UIKit
 import SDWebImage
+import MapKit
 
 class PostTableViewCell: UITableViewCell {
     
     static let indetifier = "PostTableViewCell"
+    
+    private var mapView: MKMapView = {
+        let map = MKMapView()
+        map.isZoomEnabled = false
+        map.isScrollEnabled = false
+        map.isUserInteractionEnabled = false
+        map.sizeToFit()
+        return map
+    }()
     
     private let userImageView: UIImageView = {
         let imageView = UIImageView()
@@ -39,14 +49,6 @@ class PostTableViewCell: UITableViewCell {
         return label
     }()
     
-    private let runningDateLabel1: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 19, weight: .regular)
-        label.textColor = .systemGreen
-        label.text = "Planing to run at"
-        return label
-    }()
-    
     private let postMessage: UILabel = {
         let text = UILabel()
         text.font = .systemFont(ofSize: 19, weight: .regular)
@@ -61,7 +63,7 @@ class PostTableViewCell: UITableViewCell {
         contentView.addSubview(postMessage)
         contentView.addSubview(postDateLabel)
         contentView.addSubview(runningDateLabel)
-        contentView.addSubview(runningDateLabel1)
+        contentView.addSubview(mapView)
     }
     
     required init?(coder: NSCoder) {
@@ -76,20 +78,33 @@ class PostTableViewCell: UITableViewCell {
                                      width: contentView.width - 100, height: 30)
         postDateLabel.frame = CGRect(x: userImageView.right + 10, y: userNameLabel.bottom,
                                      width: contentView.width - 100, height: 15)
-        runningDateLabel.frame = CGRect(x: runningDateLabel1.right, y: userImageView.bottom,
+        runningDateLabel.frame = CGRect(x: 10, y: userImageView.bottom,
                                      width: contentView.width - 100, height: 30)
-        runningDateLabel1.frame = CGRect(x: 10, y: userImageView.bottom,
-                                         width: 150, height: 30)
-        postMessage.frame = CGRect(x: 10, y: postDateLabel.bottom,
-                                   width: contentView.width - 20, height: 100)
+        postMessage.frame = CGRect(x: 10, y: runningDateLabel.bottom,
+                                   width: contentView.width - 20, height: 60)
+        mapView.frame = CGRect(x: 10, y: postMessage.bottom,
+                               width: contentView.width - 20, height: 200)
     }
     
     public func configure(with model: Post) {
+       
+        let pin = MKPointAnnotation()
+        
+        self.mapView.centerToLocation(model.location.location)
+        
+        pin.coordinate = model.location.location.coordinate
+        pin.title = "Start Point"
         self.postMessage.text = model.text.description
         self.userNameLabel.text = model.authorName
         self.postDateLabel.text = model.date
-        self.runningDateLabel.text = model.runningDate
-        
+        self.runningDateLabel.text = "Planing to run at " + model.runningDate
+        self.mapView.addAnnotation(pin)
+        /*
+        let coordinate = CLLocationCoordinate2DMake(model.location.location.coordinate.latitude,model.location.location.coordinate.longitude)
+        let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: coordinate, addressDictionary:nil))
+        mapItem.name = "Start Point"
+        mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeWalking])
+        */
         let path = "images/\(model.email)_profile_picture.png"
         
         
@@ -113,4 +128,19 @@ class PostTableViewCell: UITableViewCell {
             
         })
     }
+
+}
+
+
+extension MKMapView {
+  func centerToLocation(
+    _ location: CLLocation,
+    regionRadius: CLLocationDistance = 2000
+  ) {
+    let coordinateRegion = MKCoordinateRegion(
+      center: location.coordinate,
+      latitudinalMeters: regionRadius,
+      longitudinalMeters: regionRadius)
+    setRegion(coordinateRegion, animated: true)
+  }
 }

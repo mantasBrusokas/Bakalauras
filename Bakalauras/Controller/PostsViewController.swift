@@ -18,6 +18,7 @@ struct Post {
     let text: String
     let read: Bool
     let runningDate: String
+    let location: Location
     
 }
 
@@ -36,6 +37,8 @@ class PostsViewController: UIViewController {
                        forCellReuseIdentifier: PostTableViewCell.indetifier)
         return table
     }()
+    
+    
     
     private let noPostLabel: UILabel = {
         let label = UILabel()
@@ -160,7 +163,7 @@ extension PostsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 300
+        return 400
     }
     
     

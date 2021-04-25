@@ -9,20 +9,31 @@
 import UIKit
 import FirebaseAuth
 import JGProgressHUD
+import MapKit
 
-class DetailedPostInfoViewController: UIViewController {
+class DetailedPostInfoViewController: UIViewController, UIGestureRecognizerDelegate {
     
     private let spinner = JGProgressHUD(style: .dark)
     private var conversations = [Conversation]()
     private let email: String
     private let postAuthorName: String
     private var conversationID: String
+    private let pin = MKPointAnnotation()
     
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.clipsToBounds = true
         return scrollView
+    }()
+    
+    private var mapView: MKMapView = {
+        let map = MKMapView()
+        map.isZoomEnabled = false
+        map.isScrollEnabled = false
+        map.isUserInteractionEnabled = true
+        map.sizeToFit()
+        return map
     }()
     
     private let userImageView: UIImageView = {
@@ -86,6 +97,7 @@ class DetailedPostInfoViewController: UIViewController {
         scrollView.addSubview(postMessage)
         scrollView.addSubview(postDateLabel)
         scrollView.addSubview(runningDateLabel)
+        scrollView.addSubview(mapView)
         guard let emailCurrentUser = UserDefaults.standard.value(forKey: "email") as? String else {
             return
         }
@@ -94,7 +106,18 @@ class DetailedPostInfoViewController: UIViewController {
         if safeEmail != email {
             scrollView.addSubview(sendMessageButton)
         }
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapOnMap))
+            gestureRecognizer.delegate = self
+            mapView.addGestureRecognizer(gestureRecognizer)
 
+
+    }
+    
+    @objc private func handleTapOnMap(gestureRecognizer: UILongPressGestureRecognizer) {
+        let coordinate = CLLocationCoordinate2DMake(pin.coordinate.latitude, pin.coordinate.longitude)
+        let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: coordinate, addressDictionary:nil))
+        mapItem.name = "Start Point"
+        mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeWalking])
 
     }
     
@@ -112,6 +135,8 @@ class DetailedPostInfoViewController: UIViewController {
                                         width: scrollView.width - 100, height: 30)
         postMessage.frame = CGRect(x: 10, y: runningDateLabel.bottom,
                                    width: scrollView.width - 20, height: 100)
+        mapView.frame = CGRect(x: 10, y: postMessage.bottom,
+                               width: scrollView.width - 20, height: 200)
     }
     
     override func viewDidAppear(_ animeted: Bool) {
@@ -146,16 +171,25 @@ class DetailedPostInfoViewController: UIViewController {
         self.email = model.email
         self.postAuthorName = model.authorName
         self.conversationID = ""
+
+        
+        self.mapView.centerToLocation(model.location.location)
+        
+        pin.coordinate = model.location.location.coordinate
+        pin.title = "Start Point"
+        self.postMessage.text = model.text.description
+        self.userNameLabel.text = model.authorName
+        self.postDateLabel.text = model.date
+        self.runningDateLabel.text = "Planing to run at " + model.runningDate
+        self.mapView.addAnnotation(pin)
+        
+        
         super.init(nibName: nil, bundle: nil)
         
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func getCurrentConversations() {
-        
     }
     
     @objc private func sendMessageButtonPressed() {

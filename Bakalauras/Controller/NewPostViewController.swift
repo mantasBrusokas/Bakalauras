@@ -18,6 +18,11 @@ struct Location: LocationItem {
 
 class NewPostViewController: UIViewController {
     
+    private var location: Location = {
+        Location(location: CLLocation(latitude: 1, longitude: 1),
+                                 size: .zero)
+    } ()
+    
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.clipsToBounds = true
@@ -185,7 +190,7 @@ class NewPostViewController: UIViewController {
         }
         
         
-        DatabaseManager.shared.createNewPost(post: Post(id: postId, authorName: currentUserName, email: safeCurrentEmail, date: getCurrentDate(), text: text, read: false, runningDate: formatDatePickerToString(date: date)), completion: { [weak self] success in
+        DatabaseManager.shared.createNewPost(post: Post(id: postId, authorName: currentUserName, email: safeCurrentEmail, date: getCurrentDate(), text: text, read: false, runningDate: formatDatePickerToString(date: date), location: self.location), completion: { [weak self] success in
             if success {
                 self?.dismissSelf()
                 print("Post created")
@@ -201,43 +206,20 @@ class NewPostViewController: UIViewController {
         vc.title = "Pick Location"
         
         vc.navigationItem.largeTitleDisplayMode = .never
-        /* vc.completion = { selectedCoorindates in
-            /*
-            guard let strongSelf = self else {
-                return
-            }
+        vc.completion = { selectedCoorindates in
             
-             guard let messageId = strongSelf.createMessageId(),
-             let conversationId = strongSelf.conversationId,
-             let name = strongSelf.title,
-             let selfSender = strongSelf.selfSender else {
-             return
-             }
-             */
-                let longitude: Double = selectedCoorindates.longitude
-                let latitude: Double = selectedCoorindates.latitude
-
-                print("long=\(longitude) | lat= \(latitude)")
-
-
-               /* let location = Location(location: CLLocation(latitude: latitude, longitude: longitude),
+            
+            let longitude: Double = selectedCoorindates.longitude
+            let latitude: Double = selectedCoorindates.latitude
+            
+            print("long=\(longitude) | lat= \(latitude)")
+            
+            
+            self.location = Location(location: CLLocation(latitude: latitude, longitude: longitude),
                                      size: .zero)
-
-                let message = Message(sender: selfSender,
-                                      messageId: messageId,
-                                      sentDate: Date(),
-                                      kind: .location(location))
-
-                DatabaseManager.shared.sendMessage(to: conversationId, otherUserEmail: strongSelf.otherUserEmail, name: name, newMessage: message, completion: { success in
-                    if success {
-                        print("sent location message")
-                    }
-                    else {
-                        print("failed to send location message")
-                    }
-                })*/
-            } */
-        navigationController?.pushViewController(vc, animated: true)
+            
         }
-   
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
 }
