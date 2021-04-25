@@ -99,12 +99,7 @@ class PostTableViewCell: UITableViewCell {
         self.postDateLabel.text = model.date
         self.runningDateLabel.text = "Planing to run at " + model.runningDate
         self.mapView.addAnnotation(pin)
-        /*
-        let coordinate = CLLocationCoordinate2DMake(model.location.location.coordinate.latitude,model.location.location.coordinate.longitude)
-        let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: coordinate, addressDictionary:nil))
-        mapItem.name = "Start Point"
-        mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeWalking])
-        */
+
         let path = "images/\(model.email)_profile_picture.png"
         
         

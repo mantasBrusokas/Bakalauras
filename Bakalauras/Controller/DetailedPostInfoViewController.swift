@@ -16,6 +16,7 @@ class DetailedPostInfoViewController: UIViewController, UIGestureRecognizerDeleg
     private let spinner = JGProgressHUD(style: .dark)
     private var conversations = [Conversation]()
     private let email: String
+    private let postId: String
     private let postAuthorName: String
     private var conversationID: String
     private let pin = MKPointAnnotation()
@@ -103,6 +104,11 @@ class DetailedPostInfoViewController: UIViewController, UIGestureRecognizerDeleg
         }
         let safeEmail = DatabaseManager.safeEmail(emailAddress: emailCurrentUser)
         
+        if safeEmail == email {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Delete Post", style: .plain, target: self, action: #selector(deletePost))
+            navigationItem.rightBarButtonItem?.tintColor = .red
+        }
+
         if safeEmail != email {
             scrollView.addSubview(sendMessageButton)
         }
@@ -111,6 +117,41 @@ class DetailedPostInfoViewController: UIViewController, UIGestureRecognizerDeleg
             mapView.addGestureRecognizer(gestureRecognizer)
 
 
+    }
+    
+    @objc private func deletePost() {
+        
+        let actionSheet = UIAlertController(title: "Delete post",
+                                            message: "Are you sure?",
+                                            preferredStyle: .actionSheet)
+        actionSheet.addAction(UIAlertAction(title: "Delete post",
+                                            style: .destructive,
+                                            handler: { [weak self] _ in
+                                                
+                                                guard let strongSelf = self else {
+                                                    return
+                                                }
+                                                DatabaseManager.shared.deletePost(postId: strongSelf.postId, completion: { [weak self] success in
+                                                    if success {
+                                                        strongSelf.navigationController?.popViewController(animated: true)
+                                                        print("Post created")
+                                                    } else {
+                                                        print("Failed to create post...")
+                                                    }
+                                                })
+                                            }))
+        
+        actionSheet.addAction(UIAlertAction(title: "Cancel",
+                                            style: .cancel,
+                                            handler: nil))
+        
+        present(actionSheet, animated: true)
+
+    }
+    
+    
+    @objc private func dismissSelf() {
+        dismiss(animated: true, completion: nil)
     }
     
     @objc private func handleTapOnMap(gestureRecognizer: UILongPressGestureRecognizer) {
@@ -164,6 +205,7 @@ class DetailedPostInfoViewController: UIViewController, UIGestureRecognizerDeleg
     }
     
     init(with model: Post) {
+        self.postId = model.id
         self.postMessage.text = model.text.description
         self.userNameLabel.text = model.authorName
         self.postDateLabel.text = model.date

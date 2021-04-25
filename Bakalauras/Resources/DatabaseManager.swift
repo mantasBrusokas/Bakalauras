@@ -619,7 +619,7 @@ extension DatabaseManager {
                         "location": locationMap,
                     ]
                 ]
-                self.database.child("posts/\(post.id)").setValue(newCollection, withCompletionBlock: { error, _ in
+                self.database.child("posts").setValue(newCollection, withCompletionBlock: { error, _ in
                     guard error == nil else {
                         completion(false)
                         return
@@ -661,6 +661,37 @@ extension DatabaseManager {
             completion(.success(posts))
             
         })
+    }
+    
+    public func deletePost(postId: String, completion: @escaping (Bool) -> Void) {
+        
+        print("Deleting conversation with id: \(postId)")
+
+        let ref = database.child("posts")
+        ref.observeSingleEvent(of: .value) { snapshot in
+            if var posts = snapshot.value as? [[String: Any]] {
+                var positionToRemove = 0
+                for post in posts {
+                    if let id = post["id"] as? String,
+                        id == postId {
+                        print("found post to delete")
+                        break
+                    }
+                    positionToRemove += 1
+                }
+
+                posts.remove(at: positionToRemove)
+                ref.setValue(posts, withCompletionBlock: { error, _  in
+                    guard error == nil else {
+                        completion(false)
+                        print("faield to write new posts array")
+                        return
+                    }
+                    print("deleted post")
+                    completion(true)
+                })
+            }
+        }
     }
 }
 
