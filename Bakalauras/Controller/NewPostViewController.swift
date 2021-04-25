@@ -7,6 +7,14 @@
 
 import UIKit
 import FirebaseAuth
+import CoreLocation
+import MessageKit
+
+
+struct Location: LocationItem {
+    var location: CLLocation
+    var size: CGSize
+}
 
 class NewPostViewController: UIViewController {
     
@@ -60,8 +68,7 @@ class NewPostViewController: UIViewController {
         field.backgroundColor = .secondarySystemBackground
         return field
     }()
-    
-    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,21 +78,16 @@ class NewPostViewController: UIViewController {
         postButton.addTarget(self,
                                  action: #selector(postButtonTapped),
                                  for: .touchUpInside)
+        
+        addRouteButton.addTarget(self, action: #selector(presentLocationPicker),
+                                 for: .touchUpInside)
         // Add subviews
         view.addSubview(scrollView)
         scrollView.addSubview(textField)
         scrollView.addSubview(date)
         scrollView.addSubview(postButton)
         scrollView.addSubview(addRouteButton)
-        if let navigationBar = self.navigationController?.navigationBar {
-            let firstLabel = UILabel()
-            let firstFrame = CGRect(x: (navigationBar.width - firstLabel.width) / 2, y: 0, width: 100, height: navigationBar.frame.height)
-            firstLabel.frame = firstFrame
-            firstLabel.text = "New Post"
-            firstLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
-            navigationBar.addSubview(firstLabel)
-        }
-        
+
         scrollView.isUserInteractionEnabled = true
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .done, target: self, action: #selector(dismissSelf))
@@ -191,11 +193,51 @@ class NewPostViewController: UIViewController {
                 print("Failed to create post...")
             }
         })
-
-
-        
         
     }
     
+    @objc private func presentLocationPicker() {
+        let vc = LocationPickerViewController(coordinates: nil)
+        vc.title = "Pick Location"
+        
+        vc.navigationItem.largeTitleDisplayMode = .never
+        /* vc.completion = { selectedCoorindates in
+            /*
+            guard let strongSelf = self else {
+                return
+            }
+            
+             guard let messageId = strongSelf.createMessageId(),
+             let conversationId = strongSelf.conversationId,
+             let name = strongSelf.title,
+             let selfSender = strongSelf.selfSender else {
+             return
+             }
+             */
+                let longitude: Double = selectedCoorindates.longitude
+                let latitude: Double = selectedCoorindates.latitude
+
+                print("long=\(longitude) | lat= \(latitude)")
+
+
+               /* let location = Location(location: CLLocation(latitude: latitude, longitude: longitude),
+                                     size: .zero)
+
+                let message = Message(sender: selfSender,
+                                      messageId: messageId,
+                                      sentDate: Date(),
+                                      kind: .location(location))
+
+                DatabaseManager.shared.sendMessage(to: conversationId, otherUserEmail: strongSelf.otherUserEmail, name: name, newMessage: message, completion: { success in
+                    if success {
+                        print("sent location message")
+                    }
+                    else {
+                        print("failed to send location message")
+                    }
+                })*/
+            } */
+        navigationController?.pushViewController(vc, animated: true)
+        }
    
 }

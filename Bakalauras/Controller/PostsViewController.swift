@@ -94,7 +94,7 @@ class PostsViewController: UIViewController {
     
     @objc private func didTapComposeButton() {
         let vc = NewPostViewController()
-
+        vc.title = "New Post"
         let navVC = UINavigationController(rootViewController: vc)
         present(navVC, animated: true)
     }

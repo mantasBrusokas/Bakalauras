@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		12345AA72633117200ABD5F6 /* DetailedPostInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12345AA62633117100ABD5F6 /* DetailedPostInfoViewController.swift */; };
+		12345AAF26357FE500ABD5F6 /* LocationPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12345AAE26357FE500ABD5F6 /* LocationPickerViewController.swift */; };
 		1235403226110B98004E785C /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1235403126110B98004E785C /* Extensions.swift */; };
 		123A1B55261255C900D004A3 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123A1B54261255C900D004A3 /* DatabaseManager.swift */; };
 		12800CB1263047EB00E48743 /* NewConversationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12800CB0263047EB00E48743 /* NewConversationCell.swift */; };
@@ -35,6 +36,7 @@
 		03D1050373E0C3BF98C1F81C /* Pods_Bakalauras.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bakalauras.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DAE94BEE8AF1D5279A61A95 /* Pods-Bakalauras.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bakalauras.release.xcconfig"; path = "Target Support Files/Pods-Bakalauras/Pods-Bakalauras.release.xcconfig"; sourceTree = "<group>"; };
 		12345AA62633117100ABD5F6 /* DetailedPostInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedPostInfoViewController.swift; sourceTree = "<group>"; };
+		12345AAE26357FE500ABD5F6 /* LocationPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPickerViewController.swift; sourceTree = "<group>"; };
 		1235403126110B98004E785C /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		123A1B54261255C900D004A3 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		12800CB0263047EB00E48743 /* NewConversationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewConversationCell.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 				12F295D32610FEE000441AA7 /* PostsViewController.swift */,
 				12800CBD26314FF400E48743 /* NewPostViewController.swift */,
 				12345AA62633117100ABD5F6 /* DetailedPostInfoViewController.swift */,
+				12345AAE26357FE500ABD5F6 /* LocationPickerViewController.swift */,
 				12F295DF2610FF8100441AA7 /* Messages */,
 			);
 			path = Controller;
@@ -316,6 +319,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				12F295CA2610FE4C00441AA7 /* LoginViewController.swift in Sources */,
+				12345AAF26357FE500ABD5F6 /* LocationPickerViewController.swift in Sources */,
 				12F295CE2610FE7000441AA7 /* RegisterViewController.swift in Sources */,
 				12F295DD2610FF7A00441AA7 /* ProfileViewController.swift in Sources */,
 				128B77C52618D2A9000E64EC /* StorageManager.swift in Sources */,
