@@ -19,7 +19,7 @@ struct Location: LocationItem {
 class NewPostViewController: UIViewController {
     
     private var location: Location = {
-        Location(location: CLLocation(latitude: 1, longitude: 1),
+        Location(location: CLLocation(latitude: 0, longitude: 0),
                                  size: .zero)
     } ()
     
@@ -29,20 +29,9 @@ class NewPostViewController: UIViewController {
         return scrollView
     }()
     
-    private let postButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Post", for: .normal)
-        button.backgroundColor = .systemBlue
-        button.setTitleColor(.white, for: .normal)
-        //button.layer.cornerRadius = 12
-        button.layer.masksToBounds = true
-        button.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
-        return button
-    } ()
-    
     private let addRouteButton: UIButton = {
         let button = UIButton()
-        button.setTitle("AddStartingPoint", for: .normal)
+        button.setTitle("Add Starting Point", for: .normal)
         button.backgroundColor = .systemGreen
         button.setTitleColor(.white, for: .normal)
         //button.layer.cornerRadius = 12
@@ -71,6 +60,7 @@ class NewPostViewController: UIViewController {
         field.layer.borderWidth = 1
         field.layer.borderColor = UIColor.lightGray.cgColor
         field.backgroundColor = .secondarySystemBackground
+        
         return field
     }()
 
@@ -80,22 +70,18 @@ class NewPostViewController: UIViewController {
         // Do any additional setup after loading the view.
         view.backgroundColor = .systemBackground
         
-        postButton.addTarget(self,
-                                 action: #selector(postButtonTapped),
-                                 for: .touchUpInside)
-        
         addRouteButton.addTarget(self, action: #selector(presentLocationPicker),
                                  for: .touchUpInside)
         // Add subviews
         view.addSubview(scrollView)
         scrollView.addSubview(textField)
         scrollView.addSubview(date)
-        scrollView.addSubview(postButton)
         scrollView.addSubview(addRouteButton)
 
         scrollView.isUserInteractionEnabled = true
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .done, target: self, action: #selector(dismissSelf))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .done, target: self, action: #selector(dismissSelf))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Post", style: .done, target: self, action: #selector(postButtonTapped))
     }
     
     @objc private func dismissSelf() {
@@ -105,7 +91,6 @@ class NewPostViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         scrollView.frame = view.bounds
-        let size = scrollView.width/3
       
         textField.frame = CGRect(x: 5,
                                       y: 5,
@@ -117,11 +102,6 @@ class NewPostViewController: UIViewController {
                                      height: 52)
         addRouteButton.frame = CGRect(x: 30,
                                       y: date.bottom + 10,
-                                      width: scrollView.width-60,
-                                      height: 52)
-     
-        postButton.frame = CGRect(x: 30,
-                                      y: addRouteButton.bottom + 10,
                                       width: scrollView.width-60,
                                       height: 52)
     }
@@ -188,7 +168,10 @@ class NewPostViewController: UIViewController {
         guard let postId = createPostId() else {
             return
         }
-        
+        guard self.location.location.coordinate.latitude.binade != 0, self.location.location.coordinate.longitude.binade != 0  else {
+            alertPostError(message: "You must select a starting point!")
+            return
+        }
         
         DatabaseManager.shared.createNewPost(post: Post(id: postId, authorName: currentUserName, email: safeCurrentEmail, date: getCurrentDate(), text: text, read: false, runningDate: formatDatePickerToString(date: date), location: self.location), completion: { [weak self] success in
             if success {
@@ -208,14 +191,10 @@ class NewPostViewController: UIViewController {
         vc.navigationItem.largeTitleDisplayMode = .never
         vc.completion = { selectedCoorindates in
             
-            
-            let longitude: Double = selectedCoorindates.longitude
-            let latitude: Double = selectedCoorindates.latitude
-            
-            print("long=\(longitude) | lat= \(latitude)")
+            print("long=\(selectedCoorindates.longitude) | lat= \(selectedCoorindates.latitude)")
             
             
-            self.location = Location(location: CLLocation(latitude: latitude, longitude: longitude),
+            self.location = Location(location: CLLocation(latitude: selectedCoorindates.latitude, longitude: selectedCoorindates.longitude),
                                      size: .zero)
             
         }

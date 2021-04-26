@@ -92,7 +92,7 @@
             </objects>
             <point key="canvasLocation" x="-1892" y="743"/>
         </scene>
-        <!--Home-->
+        <!--Posts-->
         <scene sceneID="48Y-rY-0bH">
             <objects>
                 <viewController id="77k-Hm-uDU" customClass="PostsViewController" customModule="Bakalauras" customModuleProvider="target" sceneMemberID="viewController">
@@ -102,7 +102,7 @@
                         <viewLayoutGuide key="safeArea" id="uJf-on-DSl"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Home" id="tIe-G1-2Hm"/>
+                    <navigationItem key="navigationItem" title="Posts" id="tIe-G1-2Hm"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ayb-Th-UIG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -112,7 +112,7 @@
         <scene sceneID="tCG-Jd-bIu">
             <objects>
                 <navigationController id="phM-S0-vVg" userLabel="Home" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Home" image="house" catalog="system" id="uF7-Zp-oli"/>
+                    <tabBarItem key="tabBarItem" title="Posts" image="house" catalog="system" id="uF7-Zp-oli"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="il6-QB-RFU">
                         <rect key="frame" x="0.0" y="44" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>

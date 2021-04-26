@@ -38,8 +38,6 @@ class PostsViewController: UIViewController {
         return table
     }()
     
-    
-    
     private let noPostLabel: UILabel = {
         let label = UILabel()
         label.text = "No Posts!"

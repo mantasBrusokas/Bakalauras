@@ -13,7 +13,9 @@ class PostTableViewCell: UITableViewCell {
     
     static let indetifier = "PostTableViewCell"
     
-    private var mapView: MKMapView = {
+    private let pin = MKPointAnnotation()
+    
+    private let mapView: MKMapView = {
         let map = MKMapView()
         map.isZoomEnabled = false
         map.isScrollEnabled = false
@@ -87,18 +89,18 @@ class PostTableViewCell: UITableViewCell {
     }
     
     public func configure(with model: Post) {
-       
-        let pin = MKPointAnnotation()
-        
         self.mapView.centerToLocation(model.location.location)
         
-        pin.coordinate = model.location.location.coordinate
-        pin.title = "Start Point"
+        self.pin.coordinate = model.location.location.coordinate
+        self.pin.title = "Start Point"
         self.postMessage.text = model.text.description
         self.userNameLabel.text = model.authorName
         self.postDateLabel.text = model.date
         self.runningDateLabel.text = "Planing to run at " + model.runningDate
-        self.mapView.addAnnotation(pin)
+        
+        self.mapView.addAnnotation(self.pin)
+        print("Pin added")
+        
 
         let path = "images/\(model.email)_profile_picture.png"
         
