@@ -47,14 +47,14 @@ class PostTableViewCell: UITableViewCell {
     private let runningDateLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 19, weight: .regular)
-        label.textColor = .systemGreen
+        label.textColor = .systemBlue
         return label
     }()
     
     private let postMessage: UILabel = {
         let text = UILabel()
         text.font = .systemFont(ofSize: 19, weight: .regular)
-        text.numberOfLines = 0
+        text.numberOfLines = 3
         return text
     }()
 
@@ -80,12 +80,12 @@ class PostTableViewCell: UITableViewCell {
                                      width: contentView.width - 100, height: 30)
         postDateLabel.frame = CGRect(x: userImageView.right + 10, y: userNameLabel.bottom,
                                      width: contentView.width - 100, height: 15)
-        runningDateLabel.frame = CGRect(x: 10, y: userImageView.bottom,
-                                     width: contentView.width - 100, height: 30)
-        postMessage.frame = CGRect(x: 10, y: runningDateLabel.bottom,
-                                   width: contentView.width - 20, height: 60)
-        mapView.frame = CGRect(x: 10, y: postMessage.bottom,
-                               width: contentView.width - 20, height: 200)
+        runningDateLabel.frame = CGRect(x: 10, y: postMessage.bottom + 30,
+                                     width: contentView.width - 100, height: 25)
+        postMessage.frame = CGRect(x: 10, y: userImageView.bottom + 10,
+                                   width: contentView.width - 20, height: self.postMessage.textRect(forBounds: CGRect(x: 0, y: 0, width: contentView.width, height: CGFloat.greatestFiniteMagnitude), limitedToNumberOfLines: 2).height)
+        mapView.frame = CGRect(x: 10, y: runningDateLabel.bottom + 10,
+                               width: contentView.width - 20, height: 300)
     }
     
     public func configure(with model: Post) {
@@ -140,4 +140,15 @@ extension MKMapView {
       longitudinalMeters: regionRadius)
     setRegion(coordinateRegion, animated: true)
   }
+    
+    func centerToLocationCity(
+      _ location: CLLocation,
+      regionRadius: CLLocationDistance = 3000
+    ) {
+      let coordinateRegion = MKCoordinateRegion(
+        center: location.coordinate,
+        latitudinalMeters: regionRadius,
+        longitudinalMeters: regionRadius)
+      setRegion(coordinateRegion, animated: true)
+    }
 }

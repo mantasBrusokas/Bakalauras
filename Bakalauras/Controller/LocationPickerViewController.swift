@@ -10,10 +10,12 @@ import CoreLocation
 import MapKit
 
 class LocationPickerViewController: UIViewController {
-
+    
     public var completion: ((CLLocationCoordinate2D) -> Void)?
     private var coordinates: CLLocationCoordinate2D?
     private var isPickable = true
+    private var locManager = CLLocationManager()
+    
     private let map: MKMapView = {
         let map = MKMapView()
         return map
@@ -31,7 +33,6 @@ class LocationPickerViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .green
         if isPickable {
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Set",
                                                                 style: .done,
@@ -57,6 +58,23 @@ class LocationPickerViewController: UIViewController {
             map.addAnnotation(pin)
         }
         view.addSubview(map)
+        
+        locManager.requestWhenInUseAuthorization()
+        
+        if (CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedWhenInUse ||
+                CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedAlways){
+            guard let currentLocation1 = locManager.location else {
+                return
+            }
+            print(currentLocation1.coordinate.latitude)
+            print(currentLocation1.coordinate.longitude)
+            map.centerToLocationCity(currentLocation1)
+            let pin = MKPointAnnotation()
+            pin.title = "Current location"
+            pin.coordinate = currentLocation1.coordinate
+            map.addAnnotation(pin)
+        }
+        
     }
 
     @objc func sendButtonTapped() {
@@ -78,6 +96,7 @@ class LocationPickerViewController: UIViewController {
 
         // drop a pin on that location
         let pin = MKPointAnnotation()
+        pin.title = "Start point"
         pin.coordinate = coordinates
         map.addAnnotation(pin)
     }

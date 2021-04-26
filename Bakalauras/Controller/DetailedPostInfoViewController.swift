@@ -20,11 +20,14 @@ class DetailedPostInfoViewController: UIViewController, UIGestureRecognizerDeleg
     private let postAuthorName: String
     private var conversationID: String
     private let pin = MKPointAnnotation()
+    private let heightLabelOfPost: Double
     
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.clipsToBounds = true
+        scrollView.isScrollEnabled = true
+        scrollView.isUserInteractionEnabled = true
         return scrollView
     }()
     
@@ -71,7 +74,7 @@ class DetailedPostInfoViewController: UIViewController, UIGestureRecognizerDeleg
     private let runningDateLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 19, weight: .regular)
-        label.textColor = .systemGreen
+        label.textColor = .systemBlue
         return label
     }()
     
@@ -88,6 +91,8 @@ class DetailedPostInfoViewController: UIViewController, UIGestureRecognizerDeleg
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         scrollView.frame = view.bounds
+        scrollView.isUserInteractionEnabled = true
+        
         view.backgroundColor = .systemBackground
         sendMessageButton.addTarget(self,
                               action: #selector(sendMessageButtonPressed),
@@ -104,7 +109,7 @@ class DetailedPostInfoViewController: UIViewController, UIGestureRecognizerDeleg
         }
         let safeEmail = DatabaseManager.safeEmail(emailAddress: emailCurrentUser)
         
-        if safeEmail == email {
+        if safeEmail == email || safeEmail == "admin-admin-com"{
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Delete Post", style: .plain, target: self, action: #selector(deletePost))
             navigationItem.rightBarButtonItem?.tintColor = .red
         }
@@ -115,7 +120,7 @@ class DetailedPostInfoViewController: UIViewController, UIGestureRecognizerDeleg
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapOnMap))
             gestureRecognizer.delegate = self
             mapView.addGestureRecognizer(gestureRecognizer)
-
+        calculateHeight()
 
     }
     
@@ -164,20 +169,47 @@ class DetailedPostInfoViewController: UIViewController, UIGestureRecognizerDeleg
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
         userImageView.frame = CGRect(x: 10, y: 10,
                                      width: 50, height: 50)
         userNameLabel.frame = CGRect(x: userImageView.right + 10, y: 10,
                                      width: scrollView.width - 100, height: 30)
         postDateLabel.frame = CGRect(x: userImageView.right + 10, y: userNameLabel.bottom,
                                      width: scrollView.width - 100, height: 15)
-        sendMessageButton.frame = CGRect(x: 10, y: userImageView.bottom + 10,
-                                         width: 150, height: 40)
-        runningDateLabel.frame = CGRect(x: 10, y: sendMessageButton.bottom,
+        guard let emailCurrentUser = UserDefaults.standard.value(forKey: "email") as? String else {
+            return
+        }
+        let safeEmail = DatabaseManager.safeEmail(emailAddress: emailCurrentUser)
+        if safeEmail != email {
+            sendMessageButton.frame = CGRect(x: 10, y: userImageView.bottom + 10,
+                                             width: 150, height: 40)
+            runningDateLabel.frame = CGRect(x: 10, y: sendMessageButton.bottom,
+                                            width: scrollView.width - 100, height: 30)
+            postMessage.frame = CGRect(x: 10, y: runningDateLabel.bottom,
+                                       width: scrollView.width - 20, height: self.postMessage.textRect(forBounds: CGRect(x: 0, y: 0, width: scrollView.width, height: CGFloat.greatestFiniteMagnitude), limitedToNumberOfLines: 0).height)
+            mapView.frame = CGRect(x: 10, y: postMessage.bottom,
+                                   width: scrollView.width - 20, height: 200)
+        } else {
+            
+        runningDateLabel.frame = CGRect(x: 10, y: userImageView.bottom + 10,
                                         width: scrollView.width - 100, height: 30)
         postMessage.frame = CGRect(x: 10, y: runningDateLabel.bottom,
-                                   width: scrollView.width - 20, height: 100)
-        mapView.frame = CGRect(x: 10, y: postMessage.bottom,
+                                   width: scrollView.width - 20, height: self.postMessage.textRect(forBounds: CGRect(x: 0, y: 0, width: scrollView.width, height: CGFloat.greatestFiniteMagnitude), limitedToNumberOfLines: 0).height)
+            mapView.frame = CGRect(x: 10, y: postMessage.bottom,
                                width: scrollView.width - 20, height: 200)
+        }
+        scrollView.contentSize = CGSize(width: view.width, height: mapView.frame.maxY + 370)
+    }
+        
+    private func calculateHeight() {
+        print(self.postMessage)
+        let rectOfLabel = self.postMessage.textRect(forBounds: CGRect(x: 0, y: 0, width: scrollView.width, height: CGFloat.greatestFiniteMagnitude), limitedToNumberOfLines: 0)
+        
+        let rectOfLabelOneLine = self.postMessage.textRect(forBounds: CGRect(x: 0, y: 0, width: 100, height: CGFloat.greatestFiniteMagnitude), limitedToNumberOfLines: 1)
+        let heightLabelOfPost = rectOfLabel.height
+        let heightOfLine = rectOfLabelOneLine.height
+        let numberOfLines = Int(heightLabelOfPost / heightOfLine)
+        print(rectOfLabel)
     }
     
     override func viewDidAppear(_ animeted: Bool) {
@@ -213,19 +245,11 @@ class DetailedPostInfoViewController: UIViewController, UIGestureRecognizerDeleg
         self.email = model.email
         self.postAuthorName = model.authorName
         self.conversationID = ""
-
-        
+        self.heightLabelOfPost = 0
         self.mapView.centerToLocation(model.location.location)
-        
         pin.coordinate = model.location.location.coordinate
         pin.title = "Start Point"
-        self.postMessage.text = model.text.description
-        self.userNameLabel.text = model.authorName
-        self.postDateLabel.text = model.date
-        self.runningDateLabel.text = "Planing to run at " + model.runningDate
         self.mapView.addAnnotation(pin)
-        
-        
         super.init(nibName: nil, bundle: nil)
         
     }

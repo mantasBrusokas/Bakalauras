@@ -54,13 +54,20 @@ class NewPostViewController: UIViewController {
         return field
     }()
     
+    private let dateLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Set running time"
+        label.font = .systemFont(ofSize: 18, weight: .regular)
+        label.textColor = .black
+        return label
+    }()
+    
     private let date: UIDatePicker = {
         let field = UIDatePicker()
         field.layer.cornerRadius = 12
         field.layer.borderWidth = 1
         field.layer.borderColor = UIColor.lightGray.cgColor
         field.backgroundColor = .secondarySystemBackground
-        
         return field
     }()
 
@@ -70,6 +77,9 @@ class NewPostViewController: UIViewController {
         // Do any additional setup after loading the view.
         view.backgroundColor = .systemBackground
         
+        textField.text = "Write something about your planning run: pace, distance, time, etc..."
+        textField.textColor = .lightGray
+        
         addRouteButton.addTarget(self, action: #selector(presentLocationPicker),
                                  for: .touchUpInside)
         // Add subviews
@@ -77,7 +87,8 @@ class NewPostViewController: UIViewController {
         scrollView.addSubview(textField)
         scrollView.addSubview(date)
         scrollView.addSubview(addRouteButton)
-
+        scrollView.addSubview(dateLabel)
+        setupTextView()
         scrollView.isUserInteractionEnabled = true
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .done, target: self, action: #selector(dismissSelf))
@@ -88,20 +99,28 @@ class NewPostViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    private func setupTextView() {
+        textField.delegate = self
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         scrollView.frame = view.bounds
       
-        textField.frame = CGRect(x: 5,
-                                      y: 5,
-                                      width: scrollView.width-10,
-                                      height: 80)
-        date.frame = CGRect(x: (scrollView.width - date.width) / 2,
-                            y: textField.bottom + 10,
+        textField.frame = CGRect(x: 20,
+                                      y: 20,
+                                      width: scrollView.width-40,
+                                      height: 120)
+        dateLabel.frame = CGRect(x: date.left - 140,
+                            y: textField.bottom + 20,
+                            width: 140,
+                                     height: 52)
+        date.frame = CGRect(x: (scrollView.width - date.width + 140) / 2,
+                            y: textField.bottom + 20,
                             width: date.width,
                                      height: 52)
         addRouteButton.frame = CGRect(x: 30,
-                                      y: date.bottom + 10,
+                                      y: date.bottom + 20,
                                       width: scrollView.width-60,
                                       height: 52)
     }
@@ -165,6 +184,11 @@ class NewPostViewController: UIViewController {
             alertPostError(message: "Description is empty")
             return
         }
+        guard let dateCheck = formatDatePickerToString(date: date) as? String,
+              getCurrentDate() <= dateCheck  else {
+            alertPostError(message: "Date is not valid")
+            return
+        }
         guard let postId = createPostId() else {
             return
         }
@@ -200,5 +224,20 @@ class NewPostViewController: UIViewController {
         }
         navigationController?.pushViewController(vc, animated: true)
     }
-    
+}
+
+extension NewPostViewController: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == .lightGray {
+            textView.text = nil
+            textView.textColor = .black
+        }
+    }
+    /*
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = "Write something about your planning run: pace, distance, time, etc..."
+            textView.textColor = .lightGray
+        }
+    } */
 }

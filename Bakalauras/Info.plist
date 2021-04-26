@@ -57,6 +57,10 @@
 	<string>Please allow access to take a profile picture</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Please allow access to select a photo for your profile</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>App needs location</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>App needs location</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -95,5 +99,7 @@
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>App needs location</string>
 </dict>
 </plist>
