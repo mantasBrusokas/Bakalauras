@@ -59,6 +59,17 @@ class DetailedPostInfoViewController: UIViewController, UIGestureRecognizerDeleg
         return button
     } ()
     
+    private let runButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Run together", for: .normal)
+        button.backgroundColor = .systemBlue
+        button.setTitleColor(.white, for: .normal)
+        //button.layer.cornerRadius = 12
+        button.layer.masksToBounds = true
+        button.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
+        return button
+    } ()
+    
     private let userNameLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 21, weight: .semibold)
@@ -116,6 +127,7 @@ class DetailedPostInfoViewController: UIViewController, UIGestureRecognizerDeleg
 
         if safeEmail != email {
             scrollView.addSubview(sendMessageButton)
+            scrollView.addSubview(runButton)
         }
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapOnMap))
             gestureRecognizer.delegate = self
@@ -183,6 +195,9 @@ class DetailedPostInfoViewController: UIViewController, UIGestureRecognizerDeleg
         if safeEmail != email {
             sendMessageButton.frame = CGRect(x: 10, y: userImageView.bottom + 10,
                                              width: 150, height: 40)
+            runButton.frame = CGRect(x: sendMessageButton.right + 10, y: userImageView.bottom + 10,
+                                             width: 150, height: 40)
+
             runningDateLabel.frame = CGRect(x: 10, y: sendMessageButton.bottom,
                                             width: scrollView.width - 100, height: 30)
             postMessage.frame = CGRect(x: 10, y: runningDateLabel.bottom,

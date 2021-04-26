@@ -72,6 +72,18 @@ class LoginViewController: UIViewController {
         return button
     } ()
     
+    private let resetPasswordButton: UIButton = {
+        let button = UIButton()
+        button.isHidden = true
+        button.setTitle("Reset Password", for: .normal)
+        button.backgroundColor = .systemBlue
+        button.setTitleColor(.white, for: .normal)
+        //button.layer.cornerRadius = 12
+        button.layer.masksToBounds = true
+        button.titleLabel?.font = .systemFont(ofSize: 15, weight: .bold)
+        return button
+    } ()
+    
     private let facebookLoginButton: FBLoginButton = {
         let button = FBLoginButton()
         button.permissions = ["public_profile", "email"]
@@ -99,6 +111,9 @@ class LoginViewController: UIViewController {
         loginButton.addTarget(self,
                               action: #selector(loginButtonTapped),
                               for: .touchUpInside)
+        resetPasswordButton.addTarget(self,
+                              action: #selector(resetPasswordButtonTapped),
+                              for: .touchUpInside)
         
         emailField.delegate = self
         passwordField.delegate = self
@@ -112,34 +127,63 @@ class LoginViewController: UIViewController {
         scrollView.addSubview(passwordField)
         scrollView.addSubview(loginButton)
         scrollView.addSubview(facebookLoginButton)
+        scrollView.addSubview(resetPasswordButton)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         scrollView.frame = view.bounds
+        
+
         let size = scrollView.width/1.5
         imageView.frame = CGRect(x: (scrollView.width-size)/2,
                                  y: 20,
                                  width: size,
                                  height: size)
-        emailField.frame = CGRect(x: 30,
+        emailField.frame = CGRect(x: 40,
                                   y: imageView.bottom + 10,
-                                  width: scrollView.width-60,
+                                  width: scrollView.width-80,
                                   height: 52)
-        passwordField.frame = CGRect(x: 30,
+
+        passwordField.frame = CGRect(x: 40,
                                      y: emailField.bottom + 10,
-                                     width: scrollView.width-60,
+                                     width: scrollView.width-80,
                                      height: 52)
-        loginButton.frame = CGRect(x: 30,
-                                   y: passwordField.bottom + 10,
-                                   width: scrollView.width-60,
+        resetPasswordButton.frame = CGRect(x: 80,
+                                       y: passwordField.bottom + 10,
+                                       width: scrollView.width-160,
+                                       height: 30)
+
+        loginButton.frame = CGRect(x: 40,
+                                   y: resetPasswordButton.bottom + 10,
+                                   width: scrollView.width-80,
                                    height: 52)
-        
-        facebookLoginButton.frame = CGRect(x: 30,
+        facebookLoginButton.frame = CGRect(x: 40,
                                            y: loginButton.bottom + 10,
-                                           width: scrollView.width-60,
+                                           width: scrollView.width-80,
                                            height: 52)
-        facebookLoginButton.frame.origin.y = loginButton.bottom+20
+    }
+    
+    @objc private func resetPasswordButtonTapped() {
+        let emailValue = emailField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        if emailField.isHidden == true {
+            setView(view: emailField, hidden: false)
+        } else {
+            emailField.resignFirstResponder()
+            print(emailValue)
+            Auth.auth().sendPasswordReset(withEmail: emailValue!, completion: { error in
+                if error != nil {
+                    print(error!)
+                    self.alertUserLoginError(message: "User do not exist or email field is empty")
+                }
+                else {
+                    self.alertUserLogin(message: "Password reset \n Check your email!")
+                    return
+                }
+                
+            })
+        }
     }
     
     @objc private func loginButtonTapped() {
@@ -179,6 +223,7 @@ class LoginViewController: UIViewController {
                 guard let result = authResult, error == nil else {
                     print("Failed to login user with email: \(email)")
                     strongSelf.alertUserLoginError(message: "Loggin information is not correct")
+                    strongSelf.resetPasswordButton.isHidden = false
                     return
                 }
                 let user = result.user
@@ -222,6 +267,15 @@ class LoginViewController: UIViewController {
                                       message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
         present(alert, animated: true)
+        
+    }
+    
+    func alertUserLogin(message: String) {
+        let alert = UIAlertController(title: "",
+                                      message: message, preferredStyle: .alert)
+        present(alert, animated: true)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3){
+            alert.dismiss(animated: true, completion: nil)}
     }
     
     @objc private func didTapRegister() {

@@ -19,7 +19,6 @@ struct Post {
     let read: Bool
     let runningDate: String
     let location: Location
-    
 }
 
 
