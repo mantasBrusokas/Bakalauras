@@ -18,5 +18,6 @@ pod 'MessageKit'
 pod 'JGProgressHUD'
 pod 'RealmSwift'
 pod 'SDWebImage'
+pod 'Charts'
 
 end

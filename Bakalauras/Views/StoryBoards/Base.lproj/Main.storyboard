@@ -36,6 +36,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="phM-S0-vVg" kind="relationship" relationship="viewControllers" id="V65-ow-faj"/>
+                        <segue destination="Twg-2f-ECy" kind="relationship" relationship="viewControllers" id="Gx4-2q-o6B"/>
                         <segue destination="ls6-JJ-EDn" kind="relationship" relationship="viewControllers" id="fPp-9I-bEe"/>
                         <segue destination="51H-Lb-Fak" kind="relationship" relationship="viewControllers" id="GGk-gK-y9y"/>
                     </connections>
@@ -125,6 +126,23 @@
             </objects>
             <point key="canvasLocation" x="-1020" y="-27"/>
         </scene>
+        <!--Most active-->
+        <scene sceneID="9eH-qv-ezk">
+            <objects>
+                <navigationController id="Twg-2f-ECy" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Most active" image="star" catalog="system" id="Tpi-AT-7gF"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="Ri2-qU-Slr">
+                        <rect key="frame" x="0.0" y="44" width="375" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="IWQ-SW-3CB" kind="relationship" relationship="rootViewController" id="0Og-at-EeK"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="021-2Q-6Ru" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3410" y="-27"/>
+        </scene>
         <!--Messages-->
         <scene sceneID="H0u-Y0-Oh8">
             <objects>
@@ -144,11 +162,28 @@
             </objects>
             <point key="canvasLocation" x="-2703" y="-27"/>
         </scene>
+        <!--Most active-->
+        <scene sceneID="UvL-0S-9vq">
+            <objects>
+                <viewController id="IWQ-SW-3CB" customClass="MostActiveViewController" customModule="Bakalauras" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="iEX-G0-fyN">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="Sei-Br-be1"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Most active" id="XDH-cQ-iqN"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Qp3-1N-Xza" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3409" y="743"/>
+        </scene>
     </scenes>
     <resources>
         <image name="house" catalog="system" width="128" height="106"/>
         <image name="message" catalog="system" width="128" height="113"/>
         <image name="person.circle" catalog="system" width="128" height="121"/>
+        <image name="star" catalog="system" width="128" height="116"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
