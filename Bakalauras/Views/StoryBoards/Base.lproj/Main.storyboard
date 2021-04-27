@@ -162,7 +162,7 @@
             </objects>
             <point key="canvasLocation" x="-2703" y="-27"/>
         </scene>
-        <!--Most active-->
+        <!--Most active users-->
         <scene sceneID="UvL-0S-9vq">
             <objects>
                 <viewController id="IWQ-SW-3CB" customClass="MostActiveViewController" customModule="Bakalauras" customModuleProvider="target" sceneMemberID="viewController">
@@ -172,7 +172,7 @@
                         <viewLayoutGuide key="safeArea" id="Sei-Br-be1"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Most active" id="XDH-cQ-iqN"/>
+                    <navigationItem key="navigationItem" title="Most active users" id="XDH-cQ-iqN"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qp3-1N-Xza" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

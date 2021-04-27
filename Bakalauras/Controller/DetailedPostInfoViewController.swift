@@ -294,8 +294,6 @@ class DetailedPostInfoViewController: UIViewController, UIGestureRecognizerDeleg
         
     }
     
-
-    
     private func createNewConversation(name: String, email: String) {
         
         // jei pridesiu pokalbio istrynimo galimybe cia reikes apsirasyt tvarkyma, kad nekurtu duplicate
