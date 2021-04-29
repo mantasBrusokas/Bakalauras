@@ -240,14 +240,7 @@ extension NewPostViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.textColor == .lightGray {
             textView.text = nil
-            textView.textColor = .black
+            textView.textColor = .systemBlue
         }
     }
-    /*
-    func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text.isEmpty {
-            textView.text = "Write something about your planning run: pace, distance, time, etc..."
-            textView.textColor = .lightGray
-        }
-    } */
 }
