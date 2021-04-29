@@ -53,20 +53,20 @@ class DetailedPostInfoViewController: UIViewController, UIGestureRecognizerDeleg
         button.setTitle("Send message", for: .normal)
         button.backgroundColor = .systemGreen
         button.setTitleColor(.white, for: .normal)
-        //button.layer.cornerRadius = 12
+        button.layer.cornerRadius = 15
         button.layer.masksToBounds = true
-        button.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
+        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         return button
     } ()
     
     private let runButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Run together", for: .normal)
+        button.setTitle("View profile", for: .normal)
         button.backgroundColor = .systemBlue
         button.setTitleColor(.white, for: .normal)
-        //button.layer.cornerRadius = 12
+        button.layer.cornerRadius = 15
         button.layer.masksToBounds = true
-        button.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
+        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         return button
     } ()
     
@@ -108,6 +108,9 @@ class DetailedPostInfoViewController: UIViewController, UIGestureRecognizerDeleg
         sendMessageButton.addTarget(self,
                               action: #selector(sendMessageButtonPressed),
                               for: .touchUpInside)
+        runButton.addTarget(self,
+                              action: #selector(viewProfile),
+                              for: .touchUpInside)
         view.addSubview(scrollView)
         scrollView.addSubview(userImageView)
         scrollView.addSubview(userNameLabel)
@@ -134,6 +137,31 @@ class DetailedPostInfoViewController: UIViewController, UIGestureRecognizerDeleg
             mapView.addGestureRecognizer(gestureRecognizer)
         calculateHeight()
 
+    }
+    
+    @objc private func viewProfile() {
+        
+        DatabaseManager.shared.getCurrentUser(currentUserEmail: email, completion: { [weak self] result in
+            switch result {
+            case .success(let userInfo):
+                print("successfully got user")
+                guard !userInfo .firstName.isEmpty else {
+                    print("User info empty")
+                    return
+                }
+                
+                let vc = ViewProfileController(with: userInfo)
+                
+                vc.title = "Profile"
+                //vc.navigationItem.largeTitleDisplayMode = .never
+                self?.navigationController?.pushViewController(vc, animated: true)
+
+                
+            case .failure(let error):
+                print("failed to get conversations: \(error)")
+            }
+        })
+        
     }
     
     @objc private func deletePost() {
@@ -194,12 +222,12 @@ class DetailedPostInfoViewController: UIViewController, UIGestureRecognizerDeleg
         let safeEmail = DatabaseManager.safeEmail(emailAddress: emailCurrentUser)
         if safeEmail != email {
             sendMessageButton.frame = CGRect(x: 10, y: userImageView.bottom + 10,
-                                             width: 150, height: 40)
+                                             width: 120, height: 35)
             runButton.frame = CGRect(x: sendMessageButton.right + 10, y: userImageView.bottom + 10,
-                                             width: 150, height: 40)
+                                             width: 120, height: 35)
 
             runningDateLabel.frame = CGRect(x: 10, y: sendMessageButton.bottom,
-                                            width: scrollView.width - 100, height: 30)
+                                            width: scrollView.width - 40, height: 30)
             postMessage.frame = CGRect(x: 10, y: runningDateLabel.bottom,
                                        width: scrollView.width - 20, height: self.postMessage.textRect(forBounds: CGRect(x: 0, y: 0, width: scrollView.width, height: CGFloat.greatestFiniteMagnitude), limitedToNumberOfLines: 0).height)
             mapView.frame = CGRect(x: 10, y: postMessage.bottom,
@@ -207,7 +235,7 @@ class DetailedPostInfoViewController: UIViewController, UIGestureRecognizerDeleg
         } else {
             
         runningDateLabel.frame = CGRect(x: 10, y: userImageView.bottom + 10,
-                                        width: scrollView.width - 100, height: 30)
+                                        width: scrollView.width - 40, height: 30)
         postMessage.frame = CGRect(x: 10, y: runningDateLabel.bottom,
                                    width: scrollView.width - 20, height: self.postMessage.textRect(forBounds: CGRect(x: 0, y: 0, width: scrollView.width, height: CGFloat.greatestFiniteMagnitude), limitedToNumberOfLines: 0).height)
             mapView.frame = CGRect(x: 10, y: postMessage.bottom,
@@ -256,7 +284,7 @@ class DetailedPostInfoViewController: UIViewController, UIGestureRecognizerDeleg
         self.postMessage.text = model.text.description
         self.userNameLabel.text = model.authorName
         self.postDateLabel.text = model.date
-        self.runningDateLabel.text = "Planing to run at " + model.runningDate
+        self.runningDateLabel.text = "Planning to run at " + model.runningDate
         self.email = model.email
         self.postAuthorName = model.authorName
         self.conversationID = ""

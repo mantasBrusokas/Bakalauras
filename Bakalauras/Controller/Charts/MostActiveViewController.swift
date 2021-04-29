@@ -21,8 +21,6 @@ class MostActiveViewController: UIViewController {
         return scrollView
     }()
     
-    private var loginObserver: NSObjectProtocol?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -32,7 +30,6 @@ class MostActiveViewController: UIViewController {
         view.addSubview(scrollView)
         view.addSubview(barChart)
         updatePostArray()
-        createChart()
     }
     
     private func updatePostArray() {
@@ -45,6 +42,9 @@ class MostActiveViewController: UIViewController {
                     return
                 }
                 self?.posts = postsFromDatabase
+                DispatchQueue.main.async {
+                    self?.createChart()
+                }
             case .failure(let error):
             print("failed to get posts: \(error)")
             }
@@ -52,32 +52,12 @@ class MostActiveViewController: UIViewController {
     }
     
     private func createChart() {
-        
-        if let observer = loginObserver {
-            NotificationCenter.default.removeObserver(observer)
-        }
-        
         print("starting posts chart.....")
         
         let formatter = BarChartFormatter()
             
             let xaxis:XAxis = XAxis()
 
-        DatabaseManager.shared.getAllPosts(completion: { [weak self] result in
-            switch result {
-            case .success(let postsFromDatabase):
-                print("Atnauji postu Array")
-                guard !postsFromDatabase.isEmpty else {
-                    print("Posts is empty")
-                    return
-                }
-                self?.posts = postsFromDatabase
-                
-            case .failure(let error):
-            print("failed to get posts: \(error)")
-            }
-        })
-        
         if !posts.isEmpty {
             for post in posts {
                 array.append(post.authorName)
@@ -141,17 +121,6 @@ class MostActiveViewController: UIViewController {
         {
             self.names = values
         }
-    }
-    
-    override func viewDidAppear(_ animeted: Bool) {
-        super.viewDidAppear(animeted)
-        createChart()
-        loginObserver = NotificationCenter.default.addObserver(forName: .didLogInNotification, object: nil, queue: .main, using: { [weak self] _ in
-            guard let strongSelf = self else {
-                return
-            }
-            strongSelf.createChart()
-        })
     }
     
     override func viewDidLayoutSubviews() {

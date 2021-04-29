@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		12046B5326394CB20085FB69 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12046B5226394CB20085FB69 /* EditProfileViewController.swift */; };
+		12046B55263AA4620085FB69 /* ViewProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12046B54263AA4620085FB69 /* ViewProfileController.swift */; };
 		12345AA72633117200ABD5F6 /* DetailedPostInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12345AA62633117100ABD5F6 /* DetailedPostInfoViewController.swift */; };
 		12345AAF26357FE500ABD5F6 /* LocationPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12345AAE26357FE500ABD5F6 /* LocationPickerViewController.swift */; };
 		1235403226110B98004E785C /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1235403126110B98004E785C /* Extensions.swift */; };
@@ -36,6 +38,8 @@
 /* Begin PBXFileReference section */
 		03D1050373E0C3BF98C1F81C /* Pods_Bakalauras.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bakalauras.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DAE94BEE8AF1D5279A61A95 /* Pods-Bakalauras.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bakalauras.release.xcconfig"; path = "Target Support Files/Pods-Bakalauras/Pods-Bakalauras.release.xcconfig"; sourceTree = "<group>"; };
+		12046B5226394CB20085FB69 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
+		12046B54263AA4620085FB69 /* ViewProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewProfileController.swift; sourceTree = "<group>"; };
 		12345AA62633117100ABD5F6 /* DetailedPostInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedPostInfoViewController.swift; sourceTree = "<group>"; };
 		12345AAE26357FE500ABD5F6 /* LocationPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPickerViewController.swift; sourceTree = "<group>"; };
 		1235403126110B98004E785C /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -84,6 +88,35 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		12046B4F26394C4E0085FB69 /* Posts */ = {
+			isa = PBXGroup;
+			children = (
+				12345AAE26357FE500ABD5F6 /* LocationPickerViewController.swift */,
+				12345AA62633117100ABD5F6 /* DetailedPostInfoViewController.swift */,
+				12800CBD26314FF400E48743 /* NewPostViewController.swift */,
+				12F295D32610FEE000441AA7 /* PostsViewController.swift */,
+			);
+			path = Posts;
+			sourceTree = "<group>";
+		};
+		12046B5026394C680085FB69 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				12F295DC2610FF7A00441AA7 /* ProfileViewController.swift */,
+				12046B5226394CB20085FB69 /* EditProfileViewController.swift */,
+				12046B54263AA4620085FB69 /* ViewProfileController.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		12046B5126394C840085FB69 /* Charts */ = {
+			isa = PBXGroup;
+			children = (
+				1239E4DB26383C7E00C3DFF4 /* MostActiveViewController.swift */,
+			);
+			path = Charts;
+			sourceTree = "<group>";
+		};
 		12F295A22610F4CF00441AA7 = {
 			isa = PBXGroup;
 			children = (
@@ -119,12 +152,11 @@
 		12F295C32610FCB000441AA7 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				12F295D32610FEE000441AA7 /* PostsViewController.swift */,
-				12800CBD26314FF400E48743 /* NewPostViewController.swift */,
-				12345AA62633117100ABD5F6 /* DetailedPostInfoViewController.swift */,
-				12345AAE26357FE500ABD5F6 /* LocationPickerViewController.swift */,
+				12046B5126394C840085FB69 /* Charts */,
+				12F295E12611007F00441AA7 /* Login */,
+				12046B5026394C680085FB69 /* Profile */,
+				12046B4F26394C4E0085FB69 /* Posts */,
 				12F295DF2610FF8100441AA7 /* Messages */,
-				1239E4DB26383C7E00C3DFF4 /* MostActiveViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -180,9 +212,7 @@
 			isa = PBXGroup;
 			children = (
 				12F295B22610F4D000441AA7 /* ConversationsViewController.swift */,
-				12F295E12611007F00441AA7 /* Login */,
 				12F295D92610FF6200441AA7 /* NewConversationViewController.swift */,
-				12F295DC2610FF7A00441AA7 /* ProfileViewController.swift */,
 				128B77A82618BE73000E64EC /* ChatViewController.swift */,
 			);
 			path = Messages;
@@ -322,6 +352,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				12F295CA2610FE4C00441AA7 /* LoginViewController.swift in Sources */,
+				12046B55263AA4620085FB69 /* ViewProfileController.swift in Sources */,
 				12345AAF26357FE500ABD5F6 /* LocationPickerViewController.swift in Sources */,
 				12F295CE2610FE7000441AA7 /* RegisterViewController.swift in Sources */,
 				12F295DD2610FF7A00441AA7 /* ProfileViewController.swift in Sources */,
@@ -329,6 +360,7 @@
 				12F295D42610FEE000441AA7 /* PostsViewController.swift in Sources */,
 				12F295B32610F4D000441AA7 /* ConversationsViewController.swift in Sources */,
 				12F295AF2610F4D000441AA7 /* AppDelegate.swift in Sources */,
+				12046B5326394CB20085FB69 /* EditProfileViewController.swift in Sources */,
 				12F295DA2610FF6200441AA7 /* NewConversationViewController.swift in Sources */,
 				12800CB1263047EB00E48743 /* NewConversationCell.swift in Sources */,
 				1239E4DC26383C7E00C3DFF4 /* MostActiveViewController.swift in Sources */,

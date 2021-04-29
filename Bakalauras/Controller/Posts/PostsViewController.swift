@@ -26,7 +26,7 @@ class PostsViewController: UIViewController {
     
     private let spinner = JGProgressHUD(style: .dark)
     
-    private var posts = [Post]()
+    public var postsExisting = [Post]()
     
 
     private let tableView: UITableView = {
@@ -47,7 +47,7 @@ class PostsViewController: UIViewController {
         return label
     } ()
     
-    private var loginObserver: NSObjectProtocol?
+    //private var loginObserver: NSObjectProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,9 +61,9 @@ class PostsViewController: UIViewController {
     
     private func startListeningForPosts() {
         
-        if let observer = loginObserver {
+       /* if let observer = loginObserver {
             NotificationCenter.default.removeObserver(observer)
-        }
+        }*/
         
         print("starting posts fetch.....")
 
@@ -78,7 +78,7 @@ class PostsViewController: UIViewController {
                 }
                 self?.noPostLabel.isHidden = true
                 self?.tableView.isHidden = false
-                self?.posts = posts
+                self?.postsExisting = posts
                 
                 DispatchQueue.main.async {
                     self?.tableView.reloadData()
@@ -110,13 +110,13 @@ class PostsViewController: UIViewController {
         validateAuth()
         startListeningForPosts()
         print("Postaiiii")
-        loginObserver = NotificationCenter.default.addObserver(forName: .didLogInNotification, object: nil, queue: .main, using: { [weak self] _ in
+        /*loginObserver = NotificationCenter.default.addObserver(forName: .didLogInNotification, object: nil, queue: .main, using: { [weak self] _ in
             guard let strongSelf = self else {
                 return
             }
-            
+            print("Naudoja postams observer!")
             strongSelf.startListeningForPosts()
-        })
+        }) */
     }
     private func validateAuth() {
         if FirebaseAuth.Auth.auth().currentUser == nil {
@@ -135,11 +135,11 @@ class PostsViewController: UIViewController {
 
 extension PostsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return posts.count
+        return postsExisting.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let model = posts[indexPath.row]
+        let model = postsExisting[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.indetifier,
                                                  for: indexPath) as! PostTableViewCell
         cell.configure(with: model)
@@ -149,7 +149,7 @@ extension PostsViewController: UITableViewDelegate, UITableViewDataSource {
      
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let model = posts[indexPath.row]
+        let model = postsExisting[indexPath.row]
         openPost(model)
     }
     

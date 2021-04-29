@@ -79,9 +79,9 @@ class PostTableViewCell: UITableViewCell {
         userNameLabel.frame = CGRect(x: userImageView.right + 10, y: 10,
                                      width: contentView.width - 100, height: 30)
         postDateLabel.frame = CGRect(x: userImageView.right + 10, y: userNameLabel.bottom,
-                                     width: contentView.width - 100, height: 15)
+                                     width: contentView.width - 40, height: 15)
         runningDateLabel.frame = CGRect(x: 10, y: postMessage.bottom + 30,
-                                     width: contentView.width - 100, height: 25)
+                                     width: contentView.width - 40, height: 25)
         postMessage.frame = CGRect(x: 10, y: userImageView.bottom + 10,
                                    width: contentView.width - 20, height: self.postMessage.textRect(forBounds: CGRect(x: 0, y: 0, width: contentView.width, height: CGFloat.greatestFiniteMagnitude), limitedToNumberOfLines: 2).height)
         mapView.frame = CGRect(x: 10, y: runningDateLabel.bottom + 10,
@@ -96,7 +96,7 @@ class PostTableViewCell: UITableViewCell {
         self.postMessage.text = model.text.description
         self.userNameLabel.text = model.authorName
         self.postDateLabel.text = model.date
-        self.runningDateLabel.text = "Planing to run at " + model.runningDate
+        self.runningDateLabel.text = "Planning to run at " + model.runningDate
         
         self.mapView.addAnnotation(self.pin)
         print("Pin added")

@@ -41,12 +41,109 @@ final class DatabaseManager{
                 completion(true)
             })
         }
-    
+        
+        public func getCurrentUser(currentUserEmail: String, completion: @escaping (Result<AppUser, Error>) -> Void ) {
+            database.child("users").observe(.value, with: {snapshot in
+                guard let value = snapshot.value as? [[String: Any]] else {
+                    completion(.failure(DatabaseError.failedToFetch))
+                    return
+                }
+                let users: [AppUser] = value.compactMap({ dictionary in
+                    guard let brand = dictionary["brand"] as? String,
+                          let name = dictionary["name"] as? String,
+                          let city = dictionary["city"] as? String,
+                          let email = dictionary["email"] as? String,
+                          let distance = dictionary["distance"] as? String,
+                          let gender = dictionary["gender"] as? String,
+                          currentUserEmail == email,
+                          let born = dictionary["born"] as? String else{
+                        return nil
+                    }
+                    return AppUser(firstName: name, lastName: "", emailAddress: email, brand: brand, bornDate: born, city: city, distance: distance, gender: gender)
+                })
+                guard let currentUser = users.first else {
+                    print("User info not valid")
+                    return
+                    
+                }
+                completion(.success(currentUser))
+            })
+        }
+        
+        /// update user
+        public func updateUser(safeEmail: String, newUserInfo: AppUser, completion: @escaping (Bool) -> Void) {
+            var usersCollection = [[String: Any?]] ()
+            database.child(safeEmail).updateChildValues([
+                "born": newUserInfo.bornDate,
+                "brand": newUserInfo.brand,
+                "city": newUserInfo.city,
+                "gender": newUserInfo.gender,
+                "distance": newUserInfo.distance,
+                
+            ], withCompletionBlock: { error, _ in
+                guard error == nil else {
+                    print("failed to write to db")
+                    completion(false)
+                    return
+                }
+                self.database.child("users").observeSingleEvent(of: .value, with: { snapshot in
+                    guard let value = snapshot.value as? [[String: Any]] else {
+                        completion(false)
+                        return
+                    }
+                    let users: [AppUser] = value.compactMap({ dictionary in
+                        if let email = dictionary["email"] as? String,
+                           safeEmail == email {
+                            print("Ateina 1")
+                            
+                            let newElement = [
+                                "name": dictionary["name"],
+                                "email": newUserInfo.safeEmail,
+                                "born": newUserInfo.bornDate,
+                                "brand": newUserInfo.brand,
+                                "city": newUserInfo.city,
+                                "gender": newUserInfo.gender,
+                                "distance": newUserInfo.distance,
+                            ]
+                            usersCollection.append(newElement)
+                        } else {
+                            print("Ateina 2")
+                            let newElement2 = [
+                                "name": dictionary["name"] as! String,
+                                "email": dictionary["email"] as! String,
+                                "born": dictionary["born"] as! String ,
+                                "brand": dictionary["brand"] as! String,
+                                "city": dictionary["city"] as! String,
+                                "gender": dictionary["gender"] as! String,
+                                "distance": dictionary["distance"] as! String,
+                            ]
+                            usersCollection.append(newElement2)
+                        }
+                        return AppUser(firstName: newUserInfo.firstName, lastName:  newUserInfo.firstName, emailAddress: newUserInfo.firstName, brand: newUserInfo.firstName, bornDate: newUserInfo.firstName, city: newUserInfo.firstName, distance: newUserInfo.firstName, gender: newUserInfo.firstName)
+                    })
+                    self.database.child("users").setValue(usersCollection, withCompletionBlock: { error, _ in
+                        guard error == nil else {
+                            completion(false)
+                            return
+                        }
+                    })
+                    
+                    completion(true)
+                })
+            })
+            
+        }
+        
     /// Inserts  new user to database
-        public func insertUser(with user: ChatAppUser, completion: @escaping (Bool) -> Void) {
+        public func insertUser(with user: AppUser, completion: @escaping (Bool) -> Void) {
         database.child(user.safeEmail).setValue([
-            "first_name": user.firstName,
-            "last_name": user.lastName
+            "name": user.firstName + " " + user.lastName,
+            "born": user.bornDate,
+            "brand": user.brand,
+            "city": user.city,
+            "gender": user.gender,
+            "distance": user.distance,
+            
         ], withCompletionBlock: { error, _ in
             guard error == nil else {
                 print("failed to write to db")
@@ -58,7 +155,12 @@ final class DatabaseManager{
                     // append users dictionary
                     let newElement = [
                         "name": user.firstName + " " + user.lastName,
-                        "email": user.safeEmail
+                        "email": user.safeEmail,
+                        "born": user.bornDate,
+                        "brand": user.brand,
+                        "city": user.city,
+                        "gender": user.gender,
+                        "distance": user.distance,
                     ]
                     usersCollection.append(newElement)
                     self.database.child("users").setValue(usersCollection, withCompletionBlock: { error, _ in
@@ -73,8 +175,14 @@ final class DatabaseManager{
                 } else {
                     // create users dictionery
                     let newCollection: [[String: String]] = [
-                        ["name": user.firstName + " " + user.lastName,
-                         "email": user.safeEmail
+                        [
+                            "name": user.firstName + " " + user.lastName,
+                            "email": user.safeEmail,
+                            "born": user.bornDate,
+                            "brand": user.brand,
+                            "city": user.city,
+                            "gender": user.gender,
+                            "distance": user.distance,
                         ]
                     ]
                     self.database.child("users").setValue(newCollection, withCompletionBlock: { error, _ in
@@ -693,12 +801,18 @@ extension DatabaseManager {
             }
         }
     }
+    
 }
 
-    struct ChatAppUser {
+    struct AppUser {
         let firstName: String
         let lastName: String
         let emailAddress: String
+        let brand: String
+        let bornDate: String
+        let city: String
+        let distance: String
+        let gender: String
         
         var safeEmail: String {
             var safeEmail = emailAddress.replacingOccurrences(of: ".", with: "-")

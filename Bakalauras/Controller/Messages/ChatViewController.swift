@@ -97,11 +97,36 @@ class ChatViewController: MessagesViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "View profile", style: .done, target: self, action: #selector(viewProfile))
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
         messageInputBar.delegate = self
+    }
+    
+    @objc private func viewProfile() {
+        
+        DatabaseManager.shared.getCurrentUser(currentUserEmail: otherUserEmail, completion: { [weak self] result in
+            switch result {
+            case .success(let userInfo):
+                print("successfully got user")
+                guard !userInfo .firstName.isEmpty else {
+                    print("User info empty")
+                    return
+                }
+                
+                let vc = ViewProfileController(with: userInfo)
+                
+                vc.title = "Profile"
+                //vc.navigationItem.largeTitleDisplayMode = .never
+                self?.navigationController?.pushViewController(vc, animated: true)
+
+                
+            case .failure(let error):
+                print("failed to get conversations: \(error)")
+            }
+        })
+        
     }
     
     private func listenForMessages(id: String, shouldScrollToBottom: Bool) {

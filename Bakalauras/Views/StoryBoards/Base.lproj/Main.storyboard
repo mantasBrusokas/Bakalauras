@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="4H8-QU-ArM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="4H8-QU-ArM">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -66,28 +66,13 @@
         <scene sceneID="OVs-oC-H7s">
             <objects>
                 <viewController id="lOy-hn-cmN" customClass="ProfileViewController" customModule="Bakalauras" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="3Tf-um-UqC">
+                    <view key="view" contentMode="scaleToFill" id="yFn-Aj-RR5">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="DV1-Zq-P2p">
-                                <rect key="frame" x="0.0" y="140" width="375" height="589"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            </tableView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="XwO-C8-bsD"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <viewLayoutGuide key="safeArea" id="ZHb-Fq-q2n"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="XwO-C8-bsD" firstAttribute="bottom" secondItem="DV1-Zq-P2p" secondAttribute="bottom" id="1Lj-UC-9bp"/>
-                            <constraint firstItem="DV1-Zq-P2p" firstAttribute="top" secondItem="XwO-C8-bsD" secondAttribute="top" id="ODF-OM-Xui"/>
-                            <constraint firstItem="XwO-C8-bsD" firstAttribute="trailing" secondItem="DV1-Zq-P2p" secondAttribute="trailing" id="fGT-09-dgP"/>
-                            <constraint firstItem="DV1-Zq-P2p" firstAttribute="leading" secondItem="XwO-C8-bsD" secondAttribute="leading" id="nAg-yk-PAV"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Profile" id="Dkf-Ib-lBH"/>
-                    <connections>
-                        <outlet property="tableView" destination="DV1-Zq-P2p" id="T6w-Jz-fAZ"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j9n-Zm-zKy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

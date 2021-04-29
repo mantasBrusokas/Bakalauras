@@ -38,11 +38,10 @@ class RegisterViewController: UIViewController {
         field.layer.cornerRadius = 12
         field.layer.borderWidth = 1
         field.layer.borderColor = UIColor.lightGray.cgColor
-        field.attributedPlaceholder = NSAttributedString(string:"First Name...", attributes:[NSAttributedString.Key.foregroundColor: UIColor.black])
+        field.attributedPlaceholder = NSAttributedString(string:"First Name...", attributes:[NSAttributedString.Key.foregroundColor: UIColor.systemBlue])
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
         field.backgroundColor = .secondarySystemBackground
-        field.textColor = .black
         return field
     }()
     
@@ -54,11 +53,10 @@ class RegisterViewController: UIViewController {
         field.layer.cornerRadius = 12
         field.layer.borderWidth = 1
         field.layer.borderColor = UIColor.lightGray.cgColor
-        field.attributedPlaceholder = NSAttributedString(string:"Last Name...", attributes:[NSAttributedString.Key.foregroundColor: UIColor.black])
+        field.attributedPlaceholder = NSAttributedString(string:"Last Name...", attributes:[NSAttributedString.Key.foregroundColor: UIColor.systemBlue])
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
         field.backgroundColor = .secondarySystemBackground
-        field.textColor = .black
         return field
     }()
     
@@ -70,11 +68,10 @@ class RegisterViewController: UIViewController {
         field.layer.cornerRadius = 12
         field.layer.borderWidth = 1
         field.layer.borderColor = UIColor.lightGray.cgColor
-        field.attributedPlaceholder = NSAttributedString(string:"Email Address...", attributes:[NSAttributedString.Key.foregroundColor: UIColor.black])
+        field.attributedPlaceholder = NSAttributedString(string:"Email Address...", attributes:[NSAttributedString.Key.foregroundColor: UIColor.systemBlue])
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
         field.backgroundColor = .secondarySystemBackground
-        field.textColor = .black
         return field
     }()
     
@@ -90,8 +87,7 @@ class RegisterViewController: UIViewController {
         field.leftViewMode = .always
         field.backgroundColor = .secondarySystemBackground
         field.isSecureTextEntry = true
-        field.textColor = .black
-        field.attributedPlaceholder = NSAttributedString(string:"Password", attributes:[NSAttributedString.Key.foregroundColor: UIColor.black])
+        field.attributedPlaceholder = NSAttributedString(string:"Password...", attributes:[NSAttributedString.Key.foregroundColor: UIColor.systemBlue])
         return field
     }()
     
@@ -100,7 +96,7 @@ class RegisterViewController: UIViewController {
         button.setTitle("Register", for: .normal)
         button.backgroundColor = .systemGreen
         button.setTitleColor(.white, for: .normal)
-        //button.layer.cornerRadius = 12
+        button.layer.cornerRadius = 15
         button.layer.masksToBounds = true
         button.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
         return button
@@ -242,7 +238,7 @@ class RegisterViewController: UIViewController {
                                                     UserDefaults.standard.setValue(email, forKey: "email")
                                                     UserDefaults.standard.setValue("\(firstName) \(lastName)", forKey: "name")
                                                     
-                                                    let chatUser = ChatAppUser(firstName: firstName, lastName: lastName, emailAddress: email)
+                                                    let chatUser = AppUser(firstName: firstName, lastName: lastName, emailAddress: email, brand: "", bornDate: "", city: "", distance: "", gender: "")
                                                     DatabaseManager.shared.insertUser(with: chatUser, completion: { success in
                                                         if success {
                                                             // upload image
@@ -260,13 +256,27 @@ class RegisterViewController: UIViewController {
                                                                     
                                                                 }
                                                             })
+                                                            
                                                         }
                                                         
                                                     })
-                                                    strongSelf.navigationController?.dismiss(animated: true, completion: nil)
+                                                    self?.alert(message: "You can add more information in Profile")
                                                 })
         })
     }
+    
+    func alert(message: String) {
+        let alert = UIAlertController(title: "",
+                                      message: message, preferredStyle: .alert)
+        present(alert, animated: true)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3){
+            alert.dismiss(animated: true, completion: nil)
+            
+            self.navigationController?.dismiss(animated: true, completion: nil)
+            
+        }
+    }
+
     
     func alertUserLoginError(message: String = "Please enter all information to create a new account") {
         let alert = UIAlertController(title: "Oops",

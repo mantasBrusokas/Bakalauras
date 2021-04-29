@@ -81,8 +81,21 @@ class LocationPickerViewController: UIViewController {
         guard let coordinates = coordinates else {
             return
         }
-        navigationController?.popViewController(animated: true)
+        
+        self.alert(message: "Coordinates selected")
         completion?(coordinates)
+        
+    }
+    
+    func alert(message: String) {
+        let alert = UIAlertController(title: "",
+                                      message: message, preferredStyle: .alert)
+        present(alert, animated: true)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3){
+            alert.dismiss(animated: true, completion: nil)
+            self.navigationController?.popViewController(animated: true)
+            
+        }
     }
 
     @objc func didTapMap(_ gesture: UITapGestureRecognizer) {

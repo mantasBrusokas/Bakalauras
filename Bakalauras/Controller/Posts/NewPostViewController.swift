@@ -34,7 +34,7 @@ class NewPostViewController: UIViewController {
         button.setTitle("Add Starting Point", for: .normal)
         button.backgroundColor = .systemGreen
         button.setTitleColor(.white, for: .normal)
-        //button.layer.cornerRadius = 12
+        button.layer.cornerRadius = 15
         button.layer.masksToBounds = true
         button.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
         return button
@@ -50,7 +50,7 @@ class NewPostViewController: UIViewController {
         field.layer.borderColor = UIColor.lightGray.cgColor
         field.backgroundColor = .secondarySystemBackground
         field.font = UIFont.systemFont(ofSize: 17)
-        field.textColor = .black
+        field.textColor = .systemBlue
         return field
     }()
     
@@ -58,7 +58,6 @@ class NewPostViewController: UIViewController {
         let label = UILabel()
         label.text = "Set running time"
         label.font = .systemFont(ofSize: 18, weight: .regular)
-        label.textColor = .black
         return label
     }()
     
@@ -175,6 +174,7 @@ class NewPostViewController: UIViewController {
         guard let currentUserEmail = UserDefaults.standard.value(forKey: "email") as? String,
               let currentUserName = UserDefaults.standard.value(forKey: "name") as? String
         else {
+            print("Email or name nil")
             return
         }
         let safeCurrentEmail = DatabaseManager.safeEmail(emailAddress: currentUserEmail)
@@ -207,6 +207,16 @@ class NewPostViewController: UIViewController {
         })
         
     }
+    
+    
+    func alert(message: String) {
+        let alert = UIAlertController(title: "",
+                                      message: message, preferredStyle: .alert)
+        present(alert, animated: true)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2){
+            alert.dismiss(animated: true, completion: nil)}
+    }
+
     
     @objc private func presentLocationPicker() {
         let vc = LocationPickerViewController(coordinates: nil)
